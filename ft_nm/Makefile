@@ -12,7 +12,7 @@
 
 NAME			= ft_nm
 
-SRC_NAME		= main.c init_flags.c del_nm.c
+SRC_NAME		= main.c init_flags.c del_nm.c loop_nm.c
 
 INCLUDES		= ft_nm.h
 
