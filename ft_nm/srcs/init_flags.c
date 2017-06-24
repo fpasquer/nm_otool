@@ -6,7 +6,7 @@
 /*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:47:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/23 11:42:51 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/24 09:56:41 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ t_nm						*init_flags(char const **argv)
 	t_nm					*nm;
 
 	if ((nm = (t_nm*)ft_memalloc(sizeof(*nm))) == NULL)
-		ERROR_EXIT("Malloc failled", __FILE__, del_nm, nm);
+		ERROR_EXIT("Malloc failled", __FILE__, NULL, NULL);
 	nm->flags = F_NONE;
+	nm->data = MAP_FAILED;														// pour initialuser le pointer de data et empecher le munmap
 	i = 0;
 	while (argv[i] != NULL)
 	{
@@ -79,4 +80,15 @@ t_nm						*init_flags(char const **argv)
 		i++;
 	}
 	return (nm);
+}
+
+void						print_nm(t_nm *nm)
+{
+	if (nm == NULL)
+		return ;
+	printf("p_name_cpy = %p >%s<\n", nm->p_name_cpy, nm->p_name_cpy);
+	printf("data = %p >%s<\n", nm->data, nm->data == MAP_FAILED ? "" : nm->data);
+	printf("fd = %d\n", nm->fd);
+	printf("flag = %u\n", nm->flags);
+	printf("buff = %p\n", &nm->buff);
 }

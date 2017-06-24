@@ -6,7 +6,7 @@
 /*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:05:56 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/23 14:29:34 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/24 10:00:08 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int						main(int argc, char **argv)
 		found = false;
 		while (++i < argc && (j = 0) == 0)
 		{
-
 			while (ft_isspace(argv[i][j]))
 				j++;
 			if (argv[i][j] != '-')
