@@ -6,7 +6,7 @@
 /*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 11:42:21 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/24 14:21:08 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/24 15:56:20 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ bool						exe_nm(t_nm **nm)
 		if (func[i++].key == (*nm)->magic_number)
 			return (func[i - 1].f(nm));
 	ft_putstr_fd("Magic number invalable\n", STDERR_FILENO);
+																				printf("magic number = 0x%x\n", (*nm)->magic_number);
 	return (false);
 }
