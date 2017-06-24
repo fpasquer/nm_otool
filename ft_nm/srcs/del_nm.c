@@ -6,7 +6,7 @@
 /*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 10:59:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/24 10:00:01 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/24 12:52:08 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void						del_nm(void *nm)
 
 	if ((nm_ptr = (t_nm**)nm) == NULL || (*nm_ptr) == NULL)
 		return ;
-	if ((*nm_ptr)->data != NULL && (*nm_ptr)->data != MAP_FAILED && (*nm_ptr)->buff.st_size > 0)
+	if ((*nm_ptr)->data != NULL && (*nm_ptr)->data != MAP_FAILED &&
+			(*nm_ptr)->buff.st_size > 0)
 		munmap((*nm_ptr)->data, (*nm_ptr)->buff.st_size);
 	if ((*nm_ptr)->p_name_cpy != NULL)
 		ft_memdel((void**)&(*nm_ptr)->p_name_cpy);

@@ -6,7 +6,7 @@
 /*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:05:56 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/24 10:00:08 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/24 12:51:43 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int						main(int argc, char **argv)
 
 	if ((nm = init_flags((const char **)argv)) == NULL)
 		ERROR_EXIT("nm == NULL", __FILE__, NULL, NULL);
-																				printf("flag = %d\n", nm->flags);
 	if (argc <= 1)
 		loop_nm(nm, "a.out");
 	else if ((i = 0) == 0)

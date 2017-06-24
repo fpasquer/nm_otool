@@ -6,7 +6,7 @@
 /*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/24 11:56:52 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/24 13:02:13 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,30 @@ typedef struct				s_nm
 	char					*data;
 	char					*curs;
 	int						fd;
-	int						magic_numbre;
+	int						magic_number;
 	unsigned int			flags;
 	struct stat				buff;
 }							t_nm;
+
+# define ERROR -1
+# define NB_FUNC 5
+
+typedef struct				s_func_nm
+{
+	int						key;
+	bool					(*f)(t_nm **);
+}							t_func_nm;
 
 t_nm						*init_flags(char const **argv);
 bool						loop_nm(t_nm *nm, char const *path_name);
 void						del_nm(void *nb);
 void						print_nm(t_nm *nm);
 void						exe_nm(t_nm **nm);
+
+bool						func_32(t_nm **nm);
+bool						func_32_cigan(t_nm **nm);
+bool						func_64(t_nm **nm);
+bool						func_64_cigan(t_nm **nm);
+bool						error_magic_number(t_nm **nm);
 
 #endif

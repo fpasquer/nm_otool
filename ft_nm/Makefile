@@ -12,7 +12,8 @@
 
 NAME			= ft_nm
 
-SRC_NAME		= main.c init_flags.c del_nm.c loop_nm.c exe_nm.c
+SRC_NAME		= main.c init_flags.c del_nm.c loop_nm.c exe_nm.c func_32.c		\
+				  func_32_cigan.c func_64.c func_64_cigan.c
 
 INCLUDES		= ft_nm.h
 
