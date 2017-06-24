@@ -6,7 +6,7 @@
 /*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/24 13:02:13 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/24 14:20:41 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_nm						*init_flags(char const **argv);
 bool						loop_nm(t_nm *nm, char const *path_name);
 void						del_nm(void *nb);
 void						print_nm(t_nm *nm);
-void						exe_nm(t_nm **nm);
+bool						exe_nm(t_nm **nm);
 
 bool						func_32(t_nm **nm);
 bool						func_32_cigan(t_nm **nm);
