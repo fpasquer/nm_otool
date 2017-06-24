@@ -6,7 +6,7 @@
 /*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/24 14:20:41 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/24 17:52:57 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "../libft/libft.h"
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
+# include <mach-o/fat.h>
 
 //nm [ -agnoprumxjlfPA [ s segname sectname ]] [ - ] [ -t format ] [[ -arch arch_flag ]...] [ file ... ]
 # define F_NONE 0x0u
@@ -62,7 +63,7 @@ typedef struct				s_nm
 }							t_nm;
 
 # define ERROR -1
-# define NB_FUNC 5
+# define NB_FUNC 7
 
 typedef struct				s_func_nm
 {
@@ -81,5 +82,7 @@ bool						func_32_cigan(t_nm **nm);
 bool						func_64(t_nm **nm);
 bool						func_64_cigan(t_nm **nm);
 bool						error_magic_number(t_nm **nm);
+bool						func_fat_magic(t_nm **nm);
+bool						func_fat_cigam(t_nm **nm);
 
 #endif
