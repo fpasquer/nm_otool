@@ -6,7 +6,7 @@
 /*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 13:23:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/24 11:11:34 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/24 12:03:23 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,19 @@ static bool					put_error_binaries(char const *path_name)
 	ft_putstr_fd(": The file was not recognized as a valid object file.\n",
 			STDERR_FILENO);
 	return (false);
+}
 
+static void					reset_struct_nm(t_nm **nm)
+{
+	if (nm == NULL || *nm == NULL)
+		ERROR_EXIT("NM == NULL", __FILE__, NULL, NULL);
+	if ((*nm)->fd > 0)
+	{
+		close((*nm)->fd);
+		(*nm)->fd = 0;
+	}
+	if ((*nm)->p_name_cpy != NULL)
+		ft_memdel((void**)&(*nm)->p_name_cpy);
 }
 
 bool						loop_nm(t_nm *nm, char const *path_name)
@@ -48,6 +60,9 @@ bool						loop_nm(t_nm *nm, char const *path_name)
 	if (ret == true && (nm->data = mmap(NULL, nm->buff.st_size, PROT_READ,
 			MAP_PRIVATE, nm->fd, 0)) == MAP_FAILED)
 		ERROR_EXIT("DATA NULL", __FILE__, del_nm, &nm);
+	if (ret == true)
+		exe_nm(&nm);
+	reset_struct_nm(&nm);
 	return (true);																//a voir dans l' avancement attention au retour dans le main
 	return (ret);
 }
