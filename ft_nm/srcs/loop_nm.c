@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 13:23:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/25 18:52:38 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/29 21:21:31 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void					reset_struct_nm(t_nm **nm)
 		close((*nm)->fd);
 		(*nm)->fd = 0;
 	}
+	(*nm)->end = NULL;
 	if ((*nm)->p_name_cpy != NULL)
 		ft_memdel((void**)&(*nm)->p_name_cpy);
 	if ((*nm)->data != NULL && (*nm)->data != MAP_FAILED &&
@@ -63,7 +64,9 @@ bool						loop_nm(t_nm *nm, char const *path_name)
 	if (ret == true && (nm->data = mmap(NULL, nm->buff.st_size, PROT_READ,
 			MAP_PRIVATE, nm->fd, 0)) == MAP_FAILED)
 		ERROR_EXIT("DATA NULL", __FILE__, del_nm, &nm);
-	if (ret == true && (nm->curs = nm->data) == nm->data)
+	nm->end = (char*)(unsigned long long int)nm->data +
+			(unsigned long long int)nm->buff.st_size;
+	if (ret == true)
 		exe_nm(&nm);
 	reset_struct_nm(&nm);
 	return (true);																//a voir dans l' avancement attention au retour dans le main

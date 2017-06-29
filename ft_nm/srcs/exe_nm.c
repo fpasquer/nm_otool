@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_nm.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 11:42:21 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/24 18:03:27 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/29 21:21:50 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool						exe_nm(t_nm **nm)
 	INIT_FUNC(4, FAT_MAGIC, func_fat_magic);
 	INIT_FUNC(5, FAT_CIGAM, func_fat_cigam);
 	INIT_FUNC(6, ERROR, NULL);
-	(*nm)->magic_number = *(int*)(*nm)->curs;
+	(*nm)->magic_number = *(int*)(*nm)->data;
 	i = 0;
 	while (func[i].key != ERROR)
 		if (func[i++].key == (*nm)->magic_number)

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/29 11:41:00 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/29 21:15:15 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ typedef struct				s_nm
 {
 	char					*p_name_cpy;
 	char					*data;
-	char					*curs;
+	//char					*curs;
+	char					*end;
 	int						fd;
 	int						magic_number;
 	unsigned int			flags;
