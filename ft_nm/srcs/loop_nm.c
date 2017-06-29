@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_nm.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 13:23:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/24 12:18:26 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/25 18:52:38 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool					put_error_file(char const *path_name)
 {
 	ft_putstr_fd(path_name, STDERR_FILENO);
-	ft_putstr_fd(": No such file or directory.\n", STDERR_FILENO);
+	ft_putstr_fd(": No such file or directorys.\n", STDERR_FILENO);
 	return (false);
 }
 
