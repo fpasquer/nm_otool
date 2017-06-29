@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_nm.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/24 17:52:57 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/29 11:41:00 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ bool						func_64_cigan(t_nm **nm);
 bool						error_magic_number(t_nm **nm);
 bool						func_fat_magic(t_nm **nm);
 bool						func_fat_cigam(t_nm **nm);
+void                        *load_bytes(t_nm **nm, off_t offset,
+        size_t size_head);
 
 #endif
