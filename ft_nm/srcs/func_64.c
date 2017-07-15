@@ -6,34 +6,43 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:41:54 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/15 12:51:55 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/15 17:02:36 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_nm.h"
 
-static bool					save_output(t_nm const **nm, struct symtab_command
+static t_symbol				*save_output(t_nm **nm, struct symtab_command
 		const *sym)
 {
 	char					*stringtable;
 	uint32_t				i;
 	struct nlist_64			*array;
+	t_symbol				*ret;
 
 	if (nm == NULL || *nm == NULL || sym == NULL)
 		ERROR_EXIT("Invalid arguments 2", __FILE__, NULL, NULL);
+	if ((ret = (t_symbol *)ft_memalloc(sizeof(*ret) * sym->nsyms)) == NULL)
+		return (NULL);
 	//printf("nb symbole : %d\n", sym->nsyms);									//allouer un tableau de struct de la taille de sym->nsyms
 	i = 0;
 	array = (void*)(*nm)->data + sym->symoff;
 	stringtable = (void*)(*nm)->data + sym->stroff;
+	(*nm)->nb_symbol = sym->nsyms;
 	while(i < sym->nsyms)
 	{
-		printf("%llx %02x %s\n", array[i].n_value, array[i].n_type, stringtable + array[i].n_un.n_strx);
+		ret[i].value = array[i].n_value;
+		ret[i].type = array[i].n_type;
+		if ((ret[i].name = ft_strdup(stringtable + array[i].n_un.n_strx)) == NULL)
+			break ;
+																				//printf("%llx %02x %s\n", array[i].n_value, array[i].n_type, stringtable + array[i].n_un.n_strx);
+																				//printf("ret[%3d].name = %p\n", i, ret[i].name);
 		i++;
 	}
-	return (true);
+	return (ret);
 }
 
-static bool					loop_func_64(t_nm const **nm,
+static t_symbol				*loop_func_64(t_nm **nm,
 		struct mach_header_64 const *header, struct load_command *lc)// changer header par la valeur de ncmds
 {
 	uint32_t				i;
@@ -48,10 +57,10 @@ static bool					loop_func_64(t_nm const **nm,
 		if ((void*)(lc = (void *)lc + lc->cmdsize) > (void*)(*nm)->end)
 			ERROR_EXIT("Ptr lc over the end 2", __FILE__, del_nm, nm);
 	}
-	return (false);
+	return (NULL);
 }
 
-bool						func_64(t_nm const **nm)
+t_symbol					*func_64(t_nm **nm)
 {
 	struct mach_header_64	*header;
 	struct load_command		*lc;

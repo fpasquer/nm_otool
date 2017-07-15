@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/15 12:50:48 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/15 16:01:08 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,6 @@
 # define F_P_MAJ 0x800u
 # define F_A_MAJ 0x1000u
 
-/*
-**	p_name_cpy	:			copy du nom passe en parametre, avec le path
-**	data		:			adresse du debut du retour de mmap
-**	end			:			pointeur de fin du fichier
-**	fd			:			file descriptor du binaire
-**	flags		:			options passees en parametre par les argv
-**	buff		:			status du binaires
-*/
-
 typedef struct				s_symbol
 {
 	char					*name;
@@ -57,12 +48,23 @@ typedef struct				s_symbol
 	uint8_t					type;
 }							t_symbol;
 
+/*
+**	p_name_cpy	:			copy du nom passe en parametre, avec le path
+**	data		:			adresse du debut du retour de mmap
+**	end			:			pointeur de fin du fichier
+**	fd			:			file descriptor du binaire
+**	nb_symbol	:			nombre de symbole trouvé;
+**	flags		:			options passees en parametre par les argv
+**	buff		:			status du binaires
+*/
+
 typedef struct				s_nm
 {
 	char					*p_name_cpy;
 	char					*data;
 	char					*end;
 	int						fd;
+	uint32_t				nb_symbol;
 	unsigned int			flags;
 	struct stat				buff;
 }							t_nm;
@@ -72,21 +74,24 @@ typedef struct				s_nm
 typedef struct				s_func_nm
 {
 	uint32_t				key;
-	bool					(*f)(t_nm const **);
+	t_symbol				*(*f)(t_nm **);
 }							t_func_nm;
 
 t_nm						*init_flags(char const **argv);
 bool						loop_nm(t_nm *nm, char const *path_name);
 void						del_nm(void *nb);
 void						print_nm(t_nm *nm);
-bool						exe_nm(t_nm **nm);
+t_symbol					*exe_nm(t_nm **nm);
+void						gestion_symbols(t_nm **nm, t_symbol **symbol);
 
-bool						func_32(t_nm const **nm);
-bool						func_32_cigan(t_nm const **nm);
-bool						func_64(t_nm const **nm);
-bool						func_64_cigan(t_nm const **nm);
-bool						error_magic_number(t_nm const **nm);
-bool						func_fat_magic(t_nm const **nm);
-bool						func_fat_cigam(t_nm const **nm);
+t_symbol					*func_32(t_nm **nm);
+t_symbol					*func_32_cigan(t_nm **nm);
+t_symbol					*func_64(t_nm **nm);
+t_symbol					*func_64_cigan(t_nm **nm);
+t_symbol					*error_magic_number(t_nm **nm);
+t_symbol					*func_fat_magic(t_nm **nm);
+t_symbol					*func_fat_cigam(t_nm **nm);
+
+int							sort_ascii(const void *, const void *);
 
 #endif

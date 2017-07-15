@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 22:00:20 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/23 11:27:31 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/15 16:10:11 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,8 @@ char				*ft_trim(char *str);
 char				*ft_implode(char *glue, char **list);
 void				ft_error(const char *s, const char *function,
 		void (*f)(void*), void *ptr);
+void				ft_qsort(void *base, size_t nel, size_t width,
+		int (*compar)(const void *, const void *));
 
 # define ERROR_EXIT(s, f, fun, ptr) {ft_error(s, f, fun, ptr); exit(-1);}
 

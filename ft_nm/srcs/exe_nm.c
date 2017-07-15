@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 11:42:21 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/30 18:09:52 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/15 15:38:15 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define INIT_FUNC(i, k, ptr) func[i].key = k; func[i].f = ptr;
 
-bool						exe_nm(t_nm **nm)
+t_symbol					*exe_nm(t_nm **nm)
 {
 	unsigned int			i;
 	uint32_t				magic_number;
@@ -32,8 +32,8 @@ bool						exe_nm(t_nm **nm)
 	i = 0;
 	while (i < NB_FUNC)
 		if (func[i++].key == magic_number)
-			return (func[i - 1].f((t_nm const **)nm));
+			return (func[i - 1].f((t_nm **)nm));
 	ft_putstr_fd("***Magic number invalable ", STDERR_FILENO);
 																				printf("magic number = 0x%x %s \n", magic_number, (*nm)->p_name_cpy);
-	return (false);
+	return (NULL);
 }

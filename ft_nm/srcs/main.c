@@ -6,18 +6,18 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:05:56 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/29 10:59:26 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/15 15:20:03 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_nm.h"
 
-int						main(int argc, char **argv)
+int							main(int argc, char **argv)
 {
-	bool				found;
-	int					i;
-	int					j;
-	t_nm				*nm;
+	bool					found;
+	int						i;
+	int						j;
+	t_nm					*nm;
 
 	if ((nm = init_flags((const char **)argv)) == NULL)
 		ERROR_EXIT("nm == NULL", __FILE__, NULL, NULL);
