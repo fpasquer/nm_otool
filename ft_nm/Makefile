@@ -6,7 +6,7 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/05/17 16:07:18 by fpasquer          #+#    #+#              #
-#    Updated: 2017/06/29 12:25:50 by fpasquer         ###   ########.fr        #
+#    Updated: 2017/07/01 09:15:44 by fpasquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OTHERS			= libft Makefile auteur
 OTHER_FLAGS 	=
 
 GCC				= gcc
-CFLAGS			= -Wall -Wextra -Werror -g
+CFLAGS			= -Wall -Wextra -Werror
 OBJ_NAME		= $(SRC_NAME:.c=.o)
 
 SRCDIR			= srcs

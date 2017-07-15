@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 13:23:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/29 21:21:31 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/06/30 11:00:43 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void					reset_struct_nm(t_nm **nm)
 
 bool						loop_nm(t_nm *nm, char const *path_name)
 {
-	bool					ret = true;
+	bool					ret;
 
 	if (nm == NULL || path_name == NULL || (ret = true) == false)
 		ERROR_EXIT("NM or path_name == NULL", __FILE__, del_nm, &nm);

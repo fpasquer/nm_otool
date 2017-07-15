@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/29 21:15:15 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/15 12:50:48 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,35 @@
 /*
 **	p_name_cpy	:			copy du nom passe en parametre, avec le path
 **	data		:			adresse du debut du retour de mmap
-**	curs		:			position du curseur dans la lecture de data
+**	end			:			pointeur de fin du fichier
 **	fd			:			file descriptor du binaire
-**	magic_number	:		numero magic
 **	flags		:			options passees en parametre par les argv
 **	buff		:			status du binaires
 */
+
+typedef struct				s_symbol
+{
+	char					*name;
+	uint64_t				value;
+	uint8_t					type;
+}							t_symbol;
 
 typedef struct				s_nm
 {
 	char					*p_name_cpy;
 	char					*data;
-	//char					*curs;
 	char					*end;
 	int						fd;
-	int						magic_number;
 	unsigned int			flags;
 	struct stat				buff;
 }							t_nm;
 
-# define ERROR -1
-# define NB_FUNC 7
+# define NB_FUNC 6
 
 typedef struct				s_func_nm
 {
-	int						key;
-	bool					(*f)(t_nm **);
+	uint32_t				key;
+	bool					(*f)(t_nm const **);
 }							t_func_nm;
 
 t_nm						*init_flags(char const **argv);
@@ -78,14 +81,12 @@ void						del_nm(void *nb);
 void						print_nm(t_nm *nm);
 bool						exe_nm(t_nm **nm);
 
-bool						func_32(t_nm **nm);
-bool						func_32_cigan(t_nm **nm);
-bool						func_64(t_nm **nm);
-bool						func_64_cigan(t_nm **nm);
-bool						error_magic_number(t_nm **nm);
-bool						func_fat_magic(t_nm **nm);
-bool						func_fat_cigam(t_nm **nm);
-void                        *load_bytes(t_nm **nm, off_t offset,
-        size_t size_head);
+bool						func_32(t_nm const **nm);
+bool						func_32_cigan(t_nm const **nm);
+bool						func_64(t_nm const **nm);
+bool						func_64_cigan(t_nm const **nm);
+bool						error_magic_number(t_nm const **nm);
+bool						func_fat_magic(t_nm const **nm);
+bool						func_fat_cigam(t_nm const **nm);
 
 #endif
