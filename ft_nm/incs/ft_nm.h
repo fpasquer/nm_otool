@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/15 16:01:08 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/16 10:26:51 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct				s_symbol
 	char					*name;
 	uint64_t				value;
 	uint8_t					type;
+	uint8_t					sect;
 }							t_symbol;
 
 /*
@@ -93,5 +94,9 @@ t_symbol					*func_fat_magic(t_nm **nm);
 t_symbol					*func_fat_cigam(t_nm **nm);
 
 int							sort_ascii(const void *, const void *);
+int							sort_numerically(void const *a, void const *b);
+void						sort_type_ascii(t_symbol *symbol, uint32_t type,
+		uint32_t end_symbol);
+																				void						print_test(t_symbol *symbol, uint32_t nb_symbol);
 
 #endif

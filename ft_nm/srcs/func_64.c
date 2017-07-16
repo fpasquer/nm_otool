@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:41:54 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/15 17:02:36 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/16 09:43:10 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static t_symbol				*save_output(t_nm **nm, struct symtab_command
 		ERROR_EXIT("Invalid arguments 2", __FILE__, NULL, NULL);
 	if ((ret = (t_symbol *)ft_memalloc(sizeof(*ret) * sym->nsyms)) == NULL)
 		return (NULL);
-	//printf("nb symbole : %d\n", sym->nsyms);									//allouer un tableau de struct de la taille de sym->nsyms
 	i = 0;
 	array = (void*)(*nm)->data + sym->symoff;
 	stringtable = (void*)(*nm)->data + sym->stroff;
@@ -33,10 +32,9 @@ static t_symbol				*save_output(t_nm **nm, struct symtab_command
 	{
 		ret[i].value = array[i].n_value;
 		ret[i].type = array[i].n_type;
+		ret[i].sect = array[i].n_sect;
 		if ((ret[i].name = ft_strdup(stringtable + array[i].n_un.n_strx)) == NULL)
 			break ;
-																				//printf("%llx %02x %s\n", array[i].n_value, array[i].n_type, stringtable + array[i].n_un.n_strx);
-																				//printf("ret[%3d].name = %p\n", i, ret[i].name);
 		i++;
 	}
 	return (ret);
