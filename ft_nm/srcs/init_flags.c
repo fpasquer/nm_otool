@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_flags.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:47:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/06/24 09:56:41 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/16 16:23:40 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void					save_flags(char const *argv, t_nm *nm)
 		ret += save_each_flag(&nm, argv[i - 1], 'u', F_U_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'm', F_M_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'x', F_X_MIN);
+		ret += save_each_flag(&nm, argv[i - 1], 'j', F_J_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'l', F_L_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'f', F_F_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'P', F_P_MAJ);

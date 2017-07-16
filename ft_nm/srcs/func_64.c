@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:41:54 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/16 09:43:10 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/16 16:05:32 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_symbol					*func_64(t_nm **nm)
 
 	if (nm == NULL || *nm == NULL)
 		ERROR_EXIT("NM = NULL", __FILE__, NULL, NULL);
+	(*nm)->len_addr = LEN_64_BIT;
 	header = (struct mach_header_64*)(*nm)->data;
 	if((void*)(lc = (void*)(*nm)->data + sizeof(*header)) >
 			(void*)(*nm)->end)

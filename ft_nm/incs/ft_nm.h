@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/16 10:26:51 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/16 16:23:15 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,13 @@
 # define F_U_MIN 0x40u
 # define F_M_MIN 0x80u
 # define F_X_MIN 0x100u
-# define F_L_MIN 0x200u
-# define F_F_MIN 0x400u
-# define F_P_MAJ 0x800u
-# define F_A_MAJ 0x1000u
+# define F_J_MIN 0x200u
+# define F_L_MIN 0x400u
+# define F_F_MIN 0x800u
+# define F_P_MAJ 0x1000u
+# define F_A_MAJ 0x2000u
+
+# define LEN_64_BIT 16u
 
 typedef struct				s_symbol
 {
@@ -67,6 +70,7 @@ typedef struct				s_nm
 	int						fd;
 	uint32_t				nb_symbol;
 	unsigned int			flags;
+	size_t					len_addr;
 	struct stat				buff;
 }							t_nm;
 
@@ -97,6 +101,8 @@ int							sort_ascii(const void *, const void *);
 int							sort_numerically(void const *a, void const *b);
 void						sort_type_ascii(t_symbol *symbol, uint32_t type,
 		uint32_t end_symbol);
-																				void						print_test(t_symbol *symbol, uint32_t nb_symbol);
+
+void						print_symbols(t_nm const *nm,
+		t_symbol const *symbol);
 
 #endif
