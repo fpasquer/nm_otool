@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/16 16:23:15 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/16 18:17:44 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define F_A_MAJ 0x2000u
 
 # define LEN_64_BIT 16u
+# define LEN_32_BIT 8u
 
 typedef struct				s_symbol
 {
@@ -69,6 +70,7 @@ typedef struct				s_nm
 	char					*end;
 	int						fd;
 	uint32_t				nb_symbol;
+	uint32_t				magic;
 	unsigned int			flags;
 	size_t					len_addr;
 	struct stat				buff;

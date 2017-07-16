@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 21:59:28 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/01/27 21:59:31 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/16 17:54:04 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+# include <stdio.h>
+#define MAX_BASE 16
 
 char				*ft_utoa_base(unsigned long long int nb,
 		const unsigned int base)
@@ -38,4 +40,28 @@ char				*ft_utoa_base(unsigned long long int nb,
 	ret = ft_utoa_base(nb / base, base);
 	ret[i++] = (mem < 10) ? (char)mem + '0' : (char)mem - 10 + 'a';
 	return (ret);
+}
+
+bool						ft_utoa_base_tab(unsigned long long int nb,
+		unsigned int base, char *tab, size_t max)
+{
+	size_t					i;
+	static char				c_base[MAX_BASE] = {'0', '1', '2', '3', '4', '5',
+			'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+	unsigned long long int	nb_mem;
+
+	if (max <= 0 || tab == NULL || base < 2 || base > MAX_BASE)
+		return (false);
+	i = 0;
+	nb_mem = nb;
+	while (nb_mem > 0 && i++ < max)
+		nb_mem /= base;
+	if (i > max)
+		return (false);
+	while (nb > 0)
+	{
+		tab[--i] = c_base[nb % base];
+		nb /= base;
+	}
+	return (true);
 }

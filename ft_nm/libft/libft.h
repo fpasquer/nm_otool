@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 22:00:20 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/15 16:10:11 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/16 17:12:43 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,8 @@ char				**ft_free_strsplit(char **tabl);
 char				*ft_itoa_base(long long int nb, const unsigned int base);
 char				*ft_utoa_base(unsigned long long int nb,
 		const unsigned int base);
+bool				ft_utoa_base_tab(unsigned long long int nb,
+		unsigned int base, char *tab, size_t max);
 void				*ft_move_octe(void *s, char del, size_t n);
 int					ft_fopen(const char *name, const char *mode);
 char				*ft_gets_stdin(char *buff, size_t n);
