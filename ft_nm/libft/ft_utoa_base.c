@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 21:59:28 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/16 17:54:04 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/16 22:07:15 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,13 @@ bool						ft_utoa_base_tab(unsigned long long int nb,
 		nb_mem /= base;
 	if (i > max)
 		return (false);
-	while (nb > 0)
-	{
-		tab[--i] = c_base[nb % base];
-		nb /= base;
-	}
+	if (nb == 0)
+		tab[i] = '0';
+	else
+		while (nb > 0)
+		{
+			tab[--i] = c_base[nb % base];
+			nb /= base;
+		}
 	return (true);
 }

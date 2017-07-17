@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/16 18:17:44 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/17 12:50:53 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int							sort_ascii(const void *, const void *);
 int							sort_numerically(void const *a, void const *b);
 void						sort_type_ascii(t_symbol *symbol, uint32_t type,
 		uint32_t end_symbol);
+void						sort_type_ascii_debug(t_symbol *symbol,
+		uint32_t type, uint32_t end_symbol, uint64_t value);
 
 void						print_symbols(t_nm const *nm,
 		t_symbol const *symbol);
