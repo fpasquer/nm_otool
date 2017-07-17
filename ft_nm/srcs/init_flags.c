@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:47:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/16 16:23:40 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/17 14:49:00 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static bool					save_each_flag(t_nm **nm, char c_src,
 	if (c_src != c_cmp)
 		return (false);
 	(*nm)->flags = (*nm)->flags | define;
+	if (define == F_U_MIN)
+		(*nm)->flags = (*nm)->flags | F_J_MIN;
 	return (true);
 }
 
@@ -58,6 +60,17 @@ static void					save_flags(char const *argv, t_nm *nm)
 	}
 }
 
+static void					check_flags(t_nm *nm)
+{
+	if (nm == NULL)
+		return ;
+	if ((nm->flags & F_U_MIN) != 0)
+	{
+		if ((nm->flags & F_A_MIN) != 0)
+			nm->flags = nm->flags ^ F_A_MIN;
+	}
+}
+
 t_nm						*init_flags(char const **argv)
 {
 	unsigned int			i;
@@ -80,10 +93,11 @@ t_nm						*init_flags(char const **argv)
 			show_error_options(argv[i][j]);
 		i++;
 	}
+	check_flags(nm);
 	return (nm);
 }
 
-void						print_nm(t_nm *nm)
+/*void						print_nm(t_nm *nm)
 {
 	if (nm == NULL)
 		return ;
@@ -92,4 +106,4 @@ void						print_nm(t_nm *nm)
 	printf("fd = %d\n", nm->fd);
 	printf("flag = %u\n", nm->flags);
 	printf("buff = %p\n", &nm->buff);
-}
+}*/
