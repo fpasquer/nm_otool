@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:41:54 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/16 22:07:33 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/17 23:32:35 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,58 @@ static t_symbol				*save_output(t_nm **nm, struct symtab_command
 		i++;
 	}
 	return (ret);
+}
+
+static char					*get_symbol_64_2(
+		struct segment_command_64 * seg_cmd, struct section_64 * sec,
+		t_symbol const symbol, uint8_t *j)
+{
+	uint32_t				i;
+
+	i = 0;
+	if (seg_cmd->nsects <= 0)
+		return ("");
+	while (i++ < seg_cmd->nsects)
+	{
+		if (++(*j) == symbol.sect)
+		{
+			if (ft_strcmp(sec->sectname, SECT_DATA) == 0)
+				return ((symbol.type & N_EXT) == 0 ? "d" : "D");
+			else if (ft_strcmp(sec->sectname, SECT_BSS) == 0)
+				return ((symbol.type & N_EXT) == 0 ? "b" : "B");
+			else if (ft_strcmp(sec->sectname, SECT_TEXT) == 0)
+				return ((symbol.type & N_EXT) == 0 ? "t" : "T");
+			return ((symbol.type & N_EXT) == 0 ? "s" : "S");
+		}
+		sec = (struct section_64 *)((char *)sec + sizeof(struct section_64));
+	}
+	return ("");
+}
+
+char						*get_symbol_64(t_nm const **nm, t_symbol const symbol)
+{
+	char					*ret;
+	uint32_t				i;
+	struct mach_header_64	*header;
+	struct load_command		*lc;
+	uint8_t					j;
+
+	header = (struct mach_header_64*)(*nm)->data;
+	lc = (void*)(*nm)->data + sizeof(*header);
+	i = 0;
+	j = 0;
+	while (i++ < header->ncmds)
+	{
+		if (lc->cmd == LC_SEGMENT_64)
+		{
+			ret = get_symbol_64_2((void *)lc, (void *)lc + sizeof(
+					struct segment_command_64), symbol, &j);
+			if (ft_strlen(ret) > 0)
+				return (ret);
+		}
+		lc = (void *)lc + lc->cmdsize;
+	}
+	return ("ERROR");
 }
 
 static t_symbol				*loop_func_64(t_nm **nm,
