@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:47:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/17 14:49:00 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/18 11:30:34 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,3 @@ t_nm						*init_flags(char const **argv)
 	check_flags(nm);
 	return (nm);
 }
-
-/*void						print_nm(t_nm *nm)
-{
-	if (nm == NULL)
-		return ;
-	printf("p_name_cpy = %p >%s<\n", nm->p_name_cpy, nm->p_name_cpy);
-	printf("data = %p >%s<\n", nm->data, nm->data == MAP_FAILED ? "" : nm->data);
-	printf("fd = %d\n", nm->fd);
-	printf("flag = %u\n", nm->flags);
-	printf("buff = %p\n", &nm->buff);
-}*/

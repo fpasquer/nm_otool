@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:41:54 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/17 23:32:35 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/18 11:31:44 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static char					*get_symbol_64_2(
 	return ("");
 }
 
-char						*get_symbol_64(t_nm const **nm, t_symbol const symbol)
+char						*get_symbol_64(t_nm const **nm,
+		t_symbol const symbol)
 {
 	char					*ret;
 	uint32_t				i;
@@ -123,6 +124,5 @@ t_symbol					*func_64(t_nm **nm)
 	if((void*)(lc = (void*)(*nm)->data + sizeof(*header)) >
 			(void*)(*nm)->end)
 		ERROR_EXIT("Ptr lc over the end", __FILE__, del_nm, nm);
-																				//printf("Magic number for 64 bits = 0x%x %x\n", header->magic, header->cputype);
 	return (loop_func_64(nm, header, lc));
 }

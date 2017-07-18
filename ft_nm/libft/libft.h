@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 22:00:20 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/16 17:12:43 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/18 11:25:56 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,10 @@ void				ft_error(const char *s, const char *function,
 		void (*f)(void*), void *ptr);
 void				ft_qsort(void *base, size_t nel, size_t width,
 		int (*compar)(const void *, const void *));
+
+bool				add_cache_print(char const *str);
+bool				print_cache(void);
+bool				init_cache_print(int const fd);
 
 # define ERROR_EXIT(s, f, fun, ptr) {ft_error(s, f, fun, ptr); exit(-1);}
 
