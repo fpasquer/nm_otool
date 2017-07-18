@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:41:54 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/18 11:31:44 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/18 13:21:43 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static t_symbol				*save_output(t_nm **nm, struct symtab_command
 		ret[i].value = array[i].n_value;
 		ret[i].type = array[i].n_type;
 		ret[i].sect = array[i].n_sect;
-		if ((ret[i].name = ft_strdup(stringtable + array[i].n_un.n_strx)) == NULL)
+		ret[i].desc =array[i].n_desc;
+		if (!(ret[i].name = ft_strdup(stringtable + array[i].n_un.n_strx)))
 			break ;
 		i++;
 	}

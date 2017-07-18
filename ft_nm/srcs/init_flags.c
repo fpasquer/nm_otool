@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:47:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/18 11:30:34 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/18 16:17:34 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void					save_flags(char const *argv, t_nm *nm)
 		ret += save_each_flag(&nm, argv[i - 1], 'p', F_P_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'r', F_R_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'u', F_U_MIN);
+		ret += save_each_flag(&nm, argv[i - 1], 'U', F_U_MAJ);
 		ret += save_each_flag(&nm, argv[i - 1], 'm', F_M_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'x', F_X_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'j', F_J_MIN);
@@ -65,10 +66,11 @@ static void					check_flags(t_nm *nm)
 	if (nm == NULL)
 		return ;
 	if ((nm->flags & F_U_MIN) != 0)
-	{
 		if ((nm->flags & F_A_MIN) != 0)
 			nm->flags = nm->flags ^ F_A_MIN;
-	}
+	if ((nm->flags & F_P_MIN) != 0)
+		if ((nm->flags & F_N_MIN) != 0)
+			nm->flags = nm->flags ^ F_N_MIN;
 }
 
 t_nm						*init_flags(char const **argv)

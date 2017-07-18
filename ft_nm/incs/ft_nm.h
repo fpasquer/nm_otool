@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/17 23:11:02 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/18 16:00:13 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
 # include <mach-o/fat.h>
+# include <mach-o/stab.h>
 
 //nm [ -agnoprumxjlfPA [ s segname sectname ]] [ - ] [ -t format ] [[ -arch arch_flag ]...] [ file ... ]
 # define F_NONE 0x0u
@@ -34,13 +35,14 @@
 # define F_P_MIN 0x10u
 # define F_R_MIN 0x20u
 # define F_U_MIN 0x40u
-# define F_M_MIN 0x80u
-# define F_X_MIN 0x100u
-# define F_J_MIN 0x200u
-# define F_L_MIN 0x400u
-# define F_F_MIN 0x800u
-# define F_P_MAJ 0x1000u
-# define F_A_MAJ 0x2000u
+# define F_U_MAJ 0x80u
+# define F_M_MIN 0x100u
+# define F_X_MIN 0x200u
+# define F_J_MIN 0x400u
+# define F_L_MIN 0x800u
+# define F_F_MIN 0x1000u
+# define F_P_MAJ 0x2000u
+# define F_A_MAJ 0x4000u
 
 # define LEN_64_BIT 16u
 # define LEN_32_BIT 8u
@@ -51,6 +53,7 @@ typedef struct				s_symbol
 	uint64_t				value;
 	uint8_t					type;
 	uint8_t					sect;
+	uint16_t				desc;
 }							t_symbol;
 
 /*
@@ -110,5 +113,6 @@ void						print_symbols(t_nm const **nm,
 		t_symbol const *symbol);
 char						*get_symbol_64(t_nm const **nm,
 		t_symbol const symbol);
+char						*get_desc(t_symbol const symbol);
 
 #endif
