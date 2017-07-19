@@ -1,8 +1,8 @@
 #!/usr/bin/php
 <?php
     define ("NAME_FILE", "list_bin_test");
-    // test 64bits -j -n -u -p -U -r ok
-    // test 32bits -j -n -u -p -U -r ok
+    // test 64bits -j -n -u -p -U -r -A ok
+    // test 32bits -j -n -u -p -U -r -A ok
     //gestion des .o
 
     $file_content = file_get_contents(NAME_FILE);

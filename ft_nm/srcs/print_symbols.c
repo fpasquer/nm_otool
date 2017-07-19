@@ -6,13 +6,14 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 16:07:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 17:44:52 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/19 19:19:19 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_nm.h"
 
 #define ADD_PRINT_SPACE(s) add_cache_print(s); add_cache_print(" ");
+#define ADD_PRINT_NAME(s) { add_cache_print(s); add_cache_print(": ");}
 
 static void					place_value(char *buff, size_t max)
 {
@@ -27,11 +28,14 @@ static void					place_value(char *buff, size_t max)
 		buff[max] = '0';
 }
 
-static void					print_symbol(t_nm const **nm, t_symbol const symbol)
+static void					print_symbol(t_nm const **nm, t_symbol const symbol,
+		char const *bin_name)
 {
 	char					buff_value[LEN_64_BIT + 1];
 
 	ft_bzero(buff_value, sizeof(char) * (LEN_64_BIT + 1));
+	if ((((*nm)->flags) & F_A_MAJ) != 0)
+		ADD_PRINT_NAME(bin_name);
 	if (((*nm)->flags & F_J_MIN) == 0)
 	{
 		if(ft_utoa_base_tab(symbol.value, 16, buff_value, LEN_64_BIT) == false)
@@ -54,10 +58,12 @@ static void					print_symbol(t_nm const **nm, t_symbol const symbol)
 	add_cache_print("\n");
 }
 
-static bool					print_multi_file(unsigned int const nb_file,
+static bool					print_multi_file(t_nm const **nm,
 	char const *name_file)
 {
-	if (nb_file > 1)
+	if (nm == NULL || *nm == NULL)
+		return (false);
+	if ((*nm)->nb_file > 1 && ((*nm)->flags & F_A_MAJ) == 0)
 	{
 		add_cache_print("\n");
 		add_cache_print(name_file);
@@ -95,7 +101,7 @@ void						print_symbols(t_nm const **nm,
 
 	if (nm == NULL || *nm == NULL || symbol == NULL ||
 			!init_cache_print(STDOUT_FILENO) || init_print_value(&i, &decalage,
-			&end, nm) == false || !print_multi_file((*nm)->nb_file, name_file))
+			&end, nm) == false || !print_multi_file(nm, name_file))
 		ERROR_EXIT("Invalid values", __FILE__, NULL, NULL);
 	while (i != end)
 	{
@@ -103,13 +109,13 @@ void						print_symbols(t_nm const **nm,
 		{
 			if (((*nm)->flags & F_U_MIN) != 0 && ((symbol[i]).type & N_TYPE) ==
 					N_UNDF && ((*nm)->flags & F_U_MAJ) == 0)
-				print_symbol(nm, symbol[i]);
+				print_symbol(nm, symbol[i], name_file);
 			else if (((*nm)->flags & F_U_MAJ) != 0 && ((symbol[i]).type &
 					N_TYPE) != N_UNDF && ((*nm)->flags & F_U_MIN) == 0)
-				print_symbol(nm, symbol[i]);
+				print_symbol(nm, symbol[i], name_file);
 			else if (((*nm)->flags & F_U_MIN) == 0 && ((*nm)->flags & F_U_MAJ)
 					== 0)
-				print_symbol(nm, symbol[i]);
+				print_symbol(nm, symbol[i], name_file);
 		}
 		i += decalage;
 	}
