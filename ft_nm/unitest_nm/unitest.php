@@ -25,7 +25,7 @@
             if ($rep_ft_nm != $rep_nm)
             {
                 echo "Difference Bin : " . $bin . "\n";
-                $error = "nm -np ".$bin." > base && ./../ft_nm -np ".$bin." > test && diff base test";
+                $error = "nm ".$flags." ".$bin." > base && ./../ft_nm ".$flags." ".$bin." > test && diff base test";
             }
             else
                 $valide_bin++;

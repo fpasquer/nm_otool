@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 15:18:53 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/19 16:17:27 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,6 @@ char						*get_symbol_64(t_nm const **nm,
 char						*get_symbol_32(t_nm const **nm,
 		t_symbol const symbol);
 char						*get_desc(t_symbol const symbol);
+char						*get_type(t_nm const **nm, t_symbol const symbol);
 
 #endif
