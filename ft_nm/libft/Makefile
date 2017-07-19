@@ -6,15 +6,19 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/27 22:00:29 by fpasquer          #+#    #+#              #
-#    Updated: 2017/07/18 11:22:24 by fpasquer         ###   ########.fr        #
+#    Updated: 2017/07/19 07:56:31 by fpasquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
+NAME_32 = libft_32.a
+
 CC = gcc
 
 FLAGS = -Wall -Wextra -Werror
+
+FLAGS_32 = -m32
 
 HEAD = libft.h
 
@@ -52,8 +56,14 @@ $(NAME):
 clear:
 	rm -rf $(OBJ)
 
+32bis:
+	$(CC) $(FLAGS) $(FLAGS_32) -c $(SRC)
+	ar rc $(NAME_32) $(OBJ)
+	ranlib $(NAME_32)
+
 fclear: clear
 	rm -rf $(NAME)
+	rm -rf $(NAME_32)
 
 re: fclear all
 
@@ -65,4 +75,4 @@ push: fclear
 	git commit -m "$(DATE)"
 	git push
 
-.PHONY: all clear fclear re norminette push
+.PHONY: all clear fclear re norminette push 32bis
