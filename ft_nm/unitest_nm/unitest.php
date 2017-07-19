@@ -9,6 +9,11 @@
     $count = 0;
     $valide_bin = 0;
     $error = "";
+    if (file_exists("../ft_nm") == false)
+    {
+        echo "../ft_nm is missing\n";
+        exit(-1);
+    }
     foreach ($array_bin as $bin)
         if (isset($bin) && !empty($bin))
         {

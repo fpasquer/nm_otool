@@ -3,3 +3,5 @@ ft_nm
 *.a
 .DS_Store
 .vscode
+unitest_nm base
+unitest_nm test

@@ -6,13 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:41:54 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/18 13:21:43 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/19 09:01:48 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_nm.h"
 
-static t_symbol				*save_output(t_nm **nm, struct symtab_command
+static t_symbol				*save_output_64(t_nm **nm, struct symtab_command
 		const *sym)
 {
 	char					*stringtable;
@@ -105,7 +105,7 @@ static t_symbol				*loop_func_64(t_nm **nm,
 	while (i++ < header->ncmds)
 	{
 		if (lc->cmd == LC_SYMTAB)
-			return (save_output(nm, (struct symtab_command const *)lc));
+			return (save_output_64(nm, (struct symtab_command const *)lc));
 		if ((void*)(lc = (void *)lc + lc->cmdsize) > (void*)(*nm)->end)
 			ERROR_EXIT("Ptr lc over the end 2", __FILE__, del_nm, nm);
 	}
