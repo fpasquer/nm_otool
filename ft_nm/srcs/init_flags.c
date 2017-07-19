@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:47:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 15:15:27 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/19 21:25:57 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,32 @@ static void					save_flags(char const *argv, t_nm *nm)
 		ret += save_each_flag(&nm, argv[i - 1], 'r', F_R_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'u', F_U_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'U', F_U_MAJ);
-		ret += save_each_flag(&nm, argv[i - 1], 'm', F_M_MIN);
-		ret += save_each_flag(&nm, argv[i - 1], 'x', F_X_MIN);
+//		ret += save_each_flag(&nm, argv[i - 1], 'm', F_M_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'j', F_J_MIN);
-		ret += save_each_flag(&nm, argv[i - 1], 'l', F_L_MIN);
-		ret += save_each_flag(&nm, argv[i - 1], 'f', F_F_MIN);
-		ret += save_each_flag(&nm, argv[i - 1], 'P', F_P_MAJ);
+//		ret += save_each_flag(&nm, argv[i - 1], 'l', F_L_MIN);
+//		ret += save_each_flag(&nm, argv[i - 1], 'f', F_F_MIN);
+//		ret += save_each_flag(&nm, argv[i - 1], 'P', F_P_MAJ);
 		if ((ret += save_each_flag(&nm, argv[i - 1], 'A', F_A_MAJ)) == 0)
 			show_error_options(argv[i - 1]);
 	}
 }
 
-static void					check_flags(t_nm *nm)
+static void					check_flags(t_nm **nm)
 {
-	if (nm == NULL)
+	if (nm == NULL || *nm == NULL)
 		return ;
-	if ((nm->flags & F_U_MIN) != 0)
-		if ((nm->flags & F_A_MIN) != 0)
-			nm->flags = nm->flags ^ F_A_MIN;
-	if ((nm->flags & F_P_MIN) != 0)
-		if ((nm->flags & F_N_MIN) != 0)
-			nm->flags = nm->flags ^ F_N_MIN;
+	if (((*nm)->flags & F_U_MIN) != 0)
+		if (((*nm)->flags & F_A_MIN) != 0)
+			(*nm)->flags = (*nm)->flags ^ F_A_MIN;
+	if (((*nm)->flags & F_P_MIN) != 0)
+	{
+		if (((*nm)->flags & F_N_MIN) != 0)
+			(*nm)->flags = (*nm)->flags ^ F_N_MIN;
+		if (((*nm)->flags & F_R_MIN) != 0)
+			(*nm)->flags = (*nm)->flags ^ F_R_MIN;
+	}
+	if (((*nm)->flags & F_O_MIN) != 0 && ((*nm)->flags & F_A_MAJ) != 0)
+		ERROR_EXIT("ft_nm: for the -print-name option!", __FILE__, del_nm, nm);
 }
 
 t_nm						*init_flags(char const **argv)
@@ -97,7 +102,7 @@ t_nm						*init_flags(char const **argv)
 			nm->nb_file = i > 1 ? nm->nb_file + 1 : nm->nb_file;
 		i++;
 	}
-	check_flags(nm);
+	check_flags(&nm);
 																				//printf("nb file = %u\n", nm->nb_file);
 	return (nm);
 }

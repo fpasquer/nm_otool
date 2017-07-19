@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 17:07:58 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/19 21:39:01 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <mach-o/fat.h>
 # include <mach-o/stab.h>
 
+//-j -n -u -p -U -r -A -g -o
 //nm [ -agnoprumxjlfPA [ s segname sectname ]] [ - ] [ -t format ] [[ -arch arch_flag ]...] [ file ... ]
 # define F_NONE 0x0u
 # define F_A_MIN 0x1u
@@ -36,13 +37,8 @@
 # define F_R_MIN 0x20u
 # define F_U_MIN 0x40u
 # define F_U_MAJ 0x80u
-# define F_M_MIN 0x100u
-# define F_X_MIN 0x200u
-# define F_J_MIN 0x400u
-# define F_L_MIN 0x800u
-# define F_F_MIN 0x1000u
-# define F_P_MAJ 0x2000u
-# define F_A_MAJ 0x4000u
+# define F_J_MIN 0x100u
+# define F_A_MAJ 0x200u
 
 # define LEN_64_BIT 16u
 # define LEN_32_BIT 8u
