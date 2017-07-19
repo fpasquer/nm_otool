@@ -776,3 +776,4 @@
 /usr/bin/stringdups32
 /usr/bin/tclsh8.4
 /usr/bin/vmmap32
+/sbin/autodiskmount
