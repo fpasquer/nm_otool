@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 16:07:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 22:25:07 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/19 22:47:48 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,50 +58,6 @@ static void					print_symbol(t_nm const **nm, t_symbol const symbol,
 	add_cache_print("\n");
 }
 
-/*static bool					print_multi_file(t_nm const **nm,
-	char const *name_file)
-{
-	if (nm == NULL || *nm == NULL)
-		return (false);
-	if ((*nm)->nb_file > 1 && ((*nm)->flags & F_A_MAJ) == 0)
-	{
-		add_cache_print("\n");
-		add_cache_print(name_file);
-		add_cache_print(":\n");
-	}
-	return (true);
-}*/
-
-// void						print_symbols(t_nm const **nm,
-// 		t_symbol const *symbol, char const *name_file)
-// {
-// 	uint32_t				i;
-// 	uint32_t				decalage;
-// 	uint32_t				end;
-
-// 	if (nm == NULL || *nm == NULL || symbol == NULL ||
-// 			!init_cache_print(STDOUT_FILENO) || init_print_value(&i, &decalage,
-// 			&end, nm) == false || !print_multi_file(nm, name_file))
-// 		ERROR_EXIT("Invalid values", __FILE__, NULL, NULL);
-// 	while (i != end)
-// 	{
-// 		if (((*nm)->flags & F_A_MIN) != 0 || ((symbol[i]).type & N_STAB) == 0)
-// 		{
-// 			if (((*nm)->flags & F_U_MIN) != 0 && ((symbol[i]).type & N_TYPE) ==
-// 					N_UNDF && ((*nm)->flags & F_U_MAJ) == 0)
-// 				print_symbol(nm, symbol[i], name_file);
-// 			else if (((*nm)->flags & F_U_MAJ) != 0 && ((symbol[i]).type &
-// 					N_TYPE) != N_UNDF && ((*nm)->flags & F_U_MIN) == 0)
-// 				print_symbol(nm, symbol[i], name_file);
-// 			else if (((*nm)->flags & F_U_MIN) == 0 && ((*nm)->flags & F_U_MAJ)
-// 					== 0)
-// 				print_symbol(nm, symbol[i], name_file);
-// 		}
-// 		i += decalage;
-// 	}
-// 	print_cache();
-// }
-
 static bool					write_symbol(unsigned int flags, t_symbol symbol)
 {
 	if (!((flags & F_A_MIN) != 0 || (symbol.type & N_STAB) == 0))
@@ -124,26 +80,6 @@ static bool					write_symbol(unsigned int flags, t_symbol symbol)
 	return (false);
 }
 
-/*static bool					init_print_value(uint32_t *i, uint32_t *decalage,
-		uint32_t *end, t_nm const **nm)
-{
-	if (i == NULL || decalage == NULL || end == NULL || nm == NULL)
-		return (false);
-	if (((*nm)->flags & F_R_MIN) != 0)
-	{
-		*i = (*nm)->nb_symbol - 1;
-		*decalage = -1;
-		*end = 0 + -1;
-	}
-	else
-	{
-		*i = 0;
-		*decalage = 1;
-		*end = (*nm)->nb_symbol;
-	}
-	return (true);
-}*/
-
 void						print_symbols(t_nm const **nm,
 		t_symbol const *symbol, char const *name_file)
 {
@@ -156,7 +92,8 @@ void						print_symbols(t_nm const **nm,
 	i = (((*nm)->flags & F_R_MIN) != 0) ? (*nm)->nb_symbol - 1 : 0;
 	decalage = (((*nm)->flags & F_R_MIN) != 0) ? -1 : 1;
 	end = (((*nm)->flags & F_R_MIN) != 0) ? 0 + -1 : (*nm)->nb_symbol;
-	if ((*nm)->nb_file > 1 && ((*nm)->flags & F_A_MAJ) == 0)
+	if ((*nm)->nb_file > 1 && ((*nm)->flags & F_A_MAJ) == 0 &&
+			((*nm)->flags & F_O_MIN) == 0)
 	{
 		add_cache_print("\n");
 		add_cache_print(name_file);
