@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 16:07:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 22:47:48 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/19 22:52:40 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,32 @@
 
 #define ADD_PRINT_SPACE(s) add_cache_print(s); add_cache_print(" ");
 #define ADD_PRINT_NAME(s) { add_cache_print(s); add_cache_print(": ");}
+
+static char					*get_type(t_nm const **nm, t_symbol const symbol)
+{
+	uint8_t					type;
+	uint8_t					ext;
+
+	ext = symbol.type & N_EXT;
+	if ((type = symbol.type & N_TYPE) == N_UNDF)
+	{
+		if (symbol.value != 0)
+			return (ext == 0 ? "c" : "C");
+		return (ext == 0 ? "u" : "U");
+	}
+	else if (type == N_ABS)
+		return (ext == 0 ? "a" : "A");
+	else if (type == N_SECT)
+		return ((*nm)->magic == MH_MAGIC_64 ? get_symbol_64(nm, symbol) :
+				get_symbol_32(nm, symbol));
+	else if (type == N_PBUD)
+		return (ext == 0 ? "u" : "U");
+	else if (type == N_INDR)
+		return (ext == 0 ? "i" : "I");
+	else if ((symbol.type & N_STAB) != 0)
+		return ("-");
+	return ("(?)");
+}
 
 static void					place_value(char *buff, size_t max)
 {

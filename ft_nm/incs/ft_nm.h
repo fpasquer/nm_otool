@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 21:39:01 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/19 22:52:37 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ char						*get_symbol_64(t_nm const **nm,
 char						*get_symbol_32(t_nm const **nm,
 		t_symbol const symbol);
 char						*get_desc(t_symbol const symbol);
-char						*get_type(t_nm const **nm, t_symbol const symbol);
 bool						put_error_binaries(char const *path_name);
 
 #endif
