@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 16:17:27 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/19 17:07:58 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_nm						*init_flags(char const **argv);
 bool						loop_nm(t_nm *nm, char const *path_name);
 void						del_nm(void *nb);
 void						print_nm(t_nm *nm);
-t_symbol					*exe_nm(t_nm **nm);
+t_symbol					*exe_nm(t_nm **nm, char const *name_bin);
 void						gestion_symbols(t_nm **nm, t_symbol **symbol,
 		char const *name_file);
 
@@ -119,5 +119,6 @@ char						*get_symbol_32(t_nm const **nm,
 		t_symbol const symbol);
 char						*get_desc(t_symbol const symbol);
 char						*get_type(t_nm const **nm, t_symbol const symbol);
+bool						put_error_binaries(char const *path_name);
 
 #endif

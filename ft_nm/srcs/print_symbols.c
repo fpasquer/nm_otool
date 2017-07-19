@@ -6,11 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 16:07:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 16:18:42 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/19 17:44:52 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_nm.h"
+
+#define ADD_PRINT_SPACE(s) add_cache_print(s); add_cache_print(" ");
 
 static void					place_value(char *buff, size_t max)
 {
@@ -38,16 +40,14 @@ static void					print_symbol(t_nm const **nm, t_symbol const symbol)
 			place_value(buff_value, (*nm)->magic == MH_MAGIC_64 ? LEN_64_BIT :
 					LEN_32_BIT);
 		else
-			ft_memset(buff_value, ' ', sizeof(char) * ((*nm)->magic ==
-					MH_MAGIC_64 ? LEN_64_BIT : LEN_32_BIT));
-		add_cache_print(buff_value);
-		add_cache_print(" ");
-		add_cache_print(get_type(nm, symbol));
-		add_cache_print(" ");
+			ft_memset(buff_value, (symbol.type & N_TYPE) == N_UNDF ? ' ' : '0',
+					sizeof(char) * ((*nm)->magic == MH_MAGIC_64 ? LEN_64_BIT :
+					LEN_32_BIT));
+		ADD_PRINT_SPACE(buff_value);
+		ADD_PRINT_SPACE(get_type(nm, symbol));
 		if (((*nm)->flags & F_A_MIN) != 0)
 		{
-			add_cache_print(get_desc(symbol));
-			add_cache_print(" ");	
+			ADD_PRINT_SPACE(get_desc(symbol));
 		}
 	}
 	add_cache_print(symbol.name);

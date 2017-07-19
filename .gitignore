@@ -1,7 +1,8 @@
 *.o
 ft_nm
+ft_nm_32
 *.a
 .DS_Store
 .vscode
-unitest_nm/base
-unitest_nm/test
+base
+test

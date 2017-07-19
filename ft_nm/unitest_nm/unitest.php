@@ -3,14 +3,14 @@
     define ("NAME_FILE", "list_bin_test");
     // test 64bits -j -n -u -p -U -r ok
     // test 32bits -j -n -u -p -U -r ok
-    define ("FLAGS", "-rju");
+    //gestion des .o
 
     $file_content = file_get_contents(NAME_FILE);
     $array_bin = explode("\n", $file_content);
     $count = 0;
     $valide_bin = 0;
     $error = "";
-    $flags = $argc > 1 ? $argv[1] : FLAGS;
+    $flags = $argc > 1 ? $argv[1] : "";
     if (file_exists("../ft_nm") == false)
     {
         echo "../ft_nm is missing\n";

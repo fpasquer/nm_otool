@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 13:23:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 15:21:16 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/19 17:08:53 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool					put_error_file(char const *path_name)
 	return (false);
 }
 
-static bool					put_error_binaries(char const *path_name)
+bool						put_error_binaries(char const *path_name)
 {
 	ft_putstr_fd(path_name, STDERR_FILENO);
 	ft_putstr_fd(": The file was not recognized as a valid object file.\n",
@@ -63,13 +63,13 @@ bool						loop_nm(t_nm *nm, char const *path_name)
 	if ((nm->fd = ft_fopen(nm->p_name_cpy, "r")) <= 0 || fstat(nm->fd,
 			&nm->buff) == -1 || (nm->buff.st_mode & S_IFMT) == S_IFDIR)
 		ret = put_error_file(path_name);
-	if (ret == true && (nm->buff.st_mode & S_IXUSR) == 0)
-		ret = put_error_binaries(path_name);
+	//if (ret == true && (nm->buff.st_mode & S_IXUSR) == 0)
+		//ret = put_error_binaries(path_name);									permet de gerer les .o
 	if (ret == true && (nm->data = mmap(NULL, nm->buff.st_size, PROT_READ,
 			MAP_PRIVATE, nm->fd, 0)) == MAP_FAILED)
 		ERROR_EXIT("DATA NULL", __FILE__, del_nm, &nm);
 	nm->end = (char*)(ULLI)nm->data + (ULLI)nm->buff.st_size;
-	if (ret == true && (symbol = exe_nm(&nm)) != NULL)
+	if (ret == true && (symbol = exe_nm(&nm, path_name)) != NULL)
 		gestion_symbols(&nm, &symbol, path_name);
 	return(reset_struct_nm(&nm));
 }
