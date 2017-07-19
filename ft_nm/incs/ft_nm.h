@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 09:11:45 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/19 15:18:53 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct				s_nm
 	int						fd;
 	uint32_t				nb_symbol;
 	uint32_t				magic;
+	unsigned int			nb_file;
 	unsigned int			flags;
 	size_t					len_addr;
 	struct stat				buff;
@@ -92,7 +93,8 @@ bool						loop_nm(t_nm *nm, char const *path_name);
 void						del_nm(void *nb);
 void						print_nm(t_nm *nm);
 t_symbol					*exe_nm(t_nm **nm);
-void						gestion_symbols(t_nm **nm, t_symbol **symbol);
+void						gestion_symbols(t_nm **nm, t_symbol **symbol,
+		char const *name_file);
 
 t_symbol					*func_32(t_nm **nm);
 t_symbol					*func_32_cigan(t_nm **nm);
@@ -110,7 +112,7 @@ void						sort_type_ascii_debug(t_symbol *symbol,
 		uint32_t type, uint32_t end_symbol, uint64_t value);
 
 void						print_symbols(t_nm const **nm,
-		t_symbol const *symbol);
+		t_symbol const *symbol, char const *name_file);
 char						*get_symbol_64(t_nm const **nm,
 		t_symbol const symbol);
 char						*get_symbol_32(t_nm const **nm,

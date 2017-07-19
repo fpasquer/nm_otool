@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:47:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/18 16:17:34 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/19 15:15:27 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,11 @@ t_nm						*init_flags(char const **argv)
 			save_flags(&(argv[i][j + 1]), nm);
 		else if (argv[i][j] == '-' && argv[i][j + 1] == '\0')
 			show_error_options(argv[i][j]);
+		else
+			nm->nb_file = i > 1 ? nm->nb_file + 1 : nm->nb_file;
 		i++;
 	}
 	check_flags(nm);
+																				//printf("nb file = %u\n", nm->nb_file);
 	return (nm);
 }

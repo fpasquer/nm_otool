@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 13:23:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/15 15:19:45 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/19 15:21:16 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ bool						loop_nm(t_nm *nm, char const *path_name)
 		ERROR_EXIT("DATA NULL", __FILE__, del_nm, &nm);
 	nm->end = (char*)(ULLI)nm->data + (ULLI)nm->buff.st_size;
 	if (ret == true && (symbol = exe_nm(&nm)) != NULL)
-		gestion_symbols(&nm, &symbol);
+		gestion_symbols(&nm, &symbol, path_name);
 	return(reset_struct_nm(&nm));
 }
