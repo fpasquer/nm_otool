@@ -1,9 +1,9 @@
 #!/usr/bin/php
 <?php
     define ("NAME_FILE", "list_bin_test");
-    // test 64bits -j -n -u -p -U ok
-    // test 32bits -j -n -u -p -U ok
-    define ("FLAGS", "-uU");
+    // test 64bits -j -n -u -p -U -r ok
+    // test 32bits -j -n -u -p -U -r ok
+    define ("FLAGS", "-rju");
 
     $file_content = file_get_contents(NAME_FILE);
     $array_bin = explode("\n", $file_content);
