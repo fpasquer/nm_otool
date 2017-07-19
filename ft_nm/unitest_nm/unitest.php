@@ -10,6 +10,7 @@
     $count = 0;
     $valide_bin = 0;
     $error = "";
+    $flags = $argc > 1 ? $argv[1] : FLAGS;
     if (file_exists("../ft_nm") == false)
     {
         echo "../ft_nm is missing\n";
@@ -19,8 +20,8 @@
         if (isset($bin) && !empty($bin))
         {
             $count++;
-            $rep_nm = shell_exec("nm ".FLAGS." ".$bin);
-            $rep_ft_nm = shell_exec("./../ft_nm ".FLAGS." ".$bin);
+            $rep_nm = shell_exec("nm ".$flags." ".$bin);
+            $rep_ft_nm = shell_exec("./../ft_nm ".$flags." ".$bin);
             if ($rep_ft_nm != $rep_nm)
             {
                 echo "Difference Bin : " . $bin . "\n";
