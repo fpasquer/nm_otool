@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 16:11:47 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 17:08:46 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct				s_symbol
 
 typedef struct				s_nm
 {
+	bool					fat;
 	char					*p_name_cpy;
 	char					*end;
 	int						fd;
@@ -87,7 +88,7 @@ typedef struct				s_nm
 typedef struct				s_func_nm
 {
 	uint32_t				key;
-	t_symbol				*(*f)(t_nm **, void *);
+	t_symbol				*(*f)(t_nm **, void *, char const *);
 }							t_func_nm;
 
 t_func_nm					g_func[NB_FUNC];
@@ -100,13 +101,13 @@ t_symbol					*exe_nm(t_nm **nm, char const *name_bin, void *ptr);
 void						gestion_symbols(t_nm **nm, t_symbol **symbol,
 		char const *name_file, void const *ptr);
 
-t_symbol					*func_32(t_nm **nm, void *ptr);
-t_symbol					*func_32_cigan(t_nm **nm, void *ptr);
-t_symbol					*func_64(t_nm **nm, void *ptr);
-t_symbol					*func_64_cigan(t_nm **nm, void *ptr);
-t_symbol					*error_magic_number(t_nm **nm, void *ptr);
-t_symbol					*func_fat_magic(t_nm **nm, void *ptr);
-t_symbol					*func_fat_cigam(t_nm **nm, void *ptr);
+t_symbol					*func_32(t_nm **nm, void *ptr, char const *name_bin);
+t_symbol					*func_32_cigan(t_nm **nm, void *ptr, char const *name_bin);
+t_symbol					*func_64(t_nm **nm, void *ptr, char const *name_bin);
+t_symbol					*func_64_cigan(t_nm **nm, void *ptr, char const *name_bin);
+t_symbol					*error_magic_number(t_nm **nm, void *ptr, char const *name_bin);
+t_symbol					*func_fat_magic(t_nm **nm, void *ptr, char const *name_bin);
+t_symbol					*func_fat_cigam(t_nm **nm, void *ptr, char const *name_bin);
 
 int							sort_ascii(const void *, const void *);
 int							sort_numerically(void const *a, void const *b);

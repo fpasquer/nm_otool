@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:38:13 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 15:54:28 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 16:43:00 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,12 @@ static t_symbol				*loop_func_32(t_nm **nm,
 	return (NULL);
 }
 
-t_symbol					*func_32(t_nm **nm, void *ptr)
+t_symbol					*func_32(t_nm **nm, void *ptr, char const *name_bin)
 {
 	struct mach_header		*header;
 	struct load_command		*lc;
 
-	if (nm == NULL || *nm == NULL || ptr == NULL)
+	if (nm == NULL || *nm == NULL || ptr == NULL || name_bin == NULL)
 		ERROR_EXIT("NM or CURS = NULL", __FILE__, del_nm, nm);
 	(*nm)->len_addr = LEN_32_BIT;
 	header = (struct mach_header*)ptr;

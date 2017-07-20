@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 11:42:21 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 16:31:29 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 16:44:50 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_symbol					*exe_nm(t_nm **nm, char const *name_bin, void *ptr)
 	i = 0;
 	while (i < NB_FUNC)
 		if (g_func[i++].key == magic_number)
-			return (g_func[i - 1].f((t_nm **)nm, ptr));
+			return (g_func[i - 1].f((t_nm **)nm, ptr, name_bin));
 	ft_putstr_fd("***Magic number invalable ", STDERR_FILENO);
 	put_error_binaries(name_bin);
 	return (NULL);

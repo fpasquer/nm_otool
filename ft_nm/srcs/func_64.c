@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:41:54 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 16:00:54 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 16:43:41 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,12 @@ static t_symbol				*loop_func_64(t_nm **nm,
 	return (NULL);
 }
 
-t_symbol					*func_64(t_nm **nm, void *ptr)
+t_symbol					*func_64(t_nm **nm, void *ptr, char const *name_bin)
 {
 	struct mach_header_64	*header;
 	struct load_command		*lc;
 
-	if (nm == NULL || *nm == NULL)
+	if (nm == NULL || *nm == NULL || ptr == NULL || name_bin == NULL)
 		ERROR_EXIT("NM = NULL", __FILE__, NULL, NULL);
 	(*nm)->len_addr = LEN_64_BIT;
 	header = (struct mach_header_64*)ptr;
