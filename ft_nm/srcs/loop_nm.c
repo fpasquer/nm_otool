@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 13:23:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 17:11:14 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 21:18:58 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ bool						reset_struct_nm(t_nm **nm, void *ptr)
 		close((*nm)->fd);
 		(*nm)->fd = 0;
 	}
-	//(*nm)->end = NULL;
 	(*nm)->fat = false;
 	if ((*nm)->p_name_cpy != NULL)
 		ft_memdel((void**)&(*nm)->p_name_cpy);

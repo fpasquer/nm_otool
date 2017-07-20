@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 17:08:46 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 21:18:06 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define FT_NM_H
 
 # include <stdio.h>
-# include <stdlib.h> //malloc free
-# include <fcntl.h> // open
-# include <unistd.h> //close write
+# include <stdlib.h>
+# include <fcntl.h>
+# include <unistd.h>
 # include <stdbool.h>
-# include <sys/mman.h> //mmap munmap
-# include <sys/stat.h> //fstat
+# include <sys/mman.h>
+# include <sys/stat.h>
 # include "../libft/libft.h"
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
@@ -33,8 +33,10 @@
 	# define CPU_TYPE CPU_TYPE_I386
 #endif
 
-//-j -n -u -p -U -r -A -g -o
-//nm [ -agnoprumxjlfPA [ s segname sectname ]] [ - ] [ -t format ] [[ -arch arch_flag ]...] [ file ... ]
+/*
+** -j -n -u -p -U -r -A -g -o
+*/
+
 # define F_NONE 0x0u
 # define F_A_MIN 0x1u
 # define F_G_MIN 0x2u

@@ -6,7 +6,7 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/05/17 16:07:18 by fpasquer          #+#    #+#              #
-#    Updated: 2017/07/19 22:52:52 by fpasquer         ###   ########.fr        #
+#    Updated: 2017/07/20 21:16:40 by fpasquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OTHERS			= libft Makefile auteur
 OTHER_FLAGS 	=
 
 GCC				= gcc
-CFLAGS			= -Wall -Wextra -Werror -g
+CFLAGS			= -Wall -Wextra -Werror -g -std=c89
 CFLAGS_32		= -m32
 OBJ_NAME		= $(SRC_NAME:.c=.o)
 

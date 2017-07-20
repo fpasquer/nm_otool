@@ -6,7 +6,7 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/27 22:00:29 by fpasquer          #+#    #+#              #
-#    Updated: 2017/07/19 07:56:31 by fpasquer         ###   ########.fr        #
+#    Updated: 2017/07/20 21:16:30 by fpasquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME_32 = libft_32.a
 
 CC = gcc
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -std=c89
 
 FLAGS_32 = -m32
 

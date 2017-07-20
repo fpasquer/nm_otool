@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:41:54 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 16:43:41 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 21:19:18 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char						*get_symbol_64(t_symbol const symbol,
 
 static t_symbol				*loop_func_64(t_nm **nm,
 		struct mach_header_64 const *header, struct load_command *lc,
-		void const *ptr)// changer header par la valeur de ncmds
+		void const *ptr)/* changer header par la valeur de ncmds */
 {
 	uint32_t				i;
 

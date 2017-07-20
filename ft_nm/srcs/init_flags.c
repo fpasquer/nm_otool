@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:47:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 14:29:37 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 21:18:40 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,7 @@ static void					save_flags(char const *argv, t_nm *nm)
 		ret += save_each_flag(&nm, argv[i - 1], 'r', F_R_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'u', F_U_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'U', F_U_MAJ);
-//		ret += save_each_flag(&nm, argv[i - 1], 'm', F_M_MIN);
 		ret += save_each_flag(&nm, argv[i - 1], 'j', F_J_MIN);
-//		ret += save_each_flag(&nm, argv[i - 1], 'l', F_L_MIN);
-//		ret += save_each_flag(&nm, argv[i - 1], 'f', F_F_MIN);
-//		ret += save_each_flag(&nm, argv[i - 1], 'P', F_P_MAJ);
 		if ((ret += save_each_flag(&nm, argv[i - 1], 'A', F_A_MAJ)) == 0)
 			show_error_options(argv[i - 1]);
 	}
@@ -87,7 +83,6 @@ t_nm						*init_flags(char const **argv)
 	if ((nm = (t_nm*)ft_memalloc(sizeof(*nm))) == NULL)
 		ERROR_EXIT("Malloc failled", __FILE__, NULL, NULL);
 	nm->flags = F_NONE;
-	//nm->data = MAP_FAILED;														// pour initialuser le pointer de data et empecher le munmap
 	i = 0;
 	while (argv[i] != NULL)
 	{
@@ -103,6 +98,5 @@ t_nm						*init_flags(char const **argv)
 		i++;
 	}
 	check_flags(&nm);
-																				//printf("nb file = %u\n", nm->nb_file);
 	return (nm);
 }

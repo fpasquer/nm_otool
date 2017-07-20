@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 11:42:21 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 16:44:50 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 21:27:28 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_symbol					*exe_nm(t_nm **nm, char const *name_bin, void *ptr)
 	unsigned int			i;
 	uint32_t				magic_number;
 
-	if (nm == NULL || *nm == NULL || name_bin == NULL)
+	if (nm == NULL || *nm == NULL || name_bin == NULL || ptr == NULL)
 		ERROR_EXIT("NM = NULL", __FILE__, NULL, NULL);
 	magic_number = *(uint32_t*)ptr;
 	i = 0;
