@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 21:18:06 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 22:47:04 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,15 @@
 # include <mach-o/nlist.h>
 # include <mach-o/fat.h>
 # include <mach-o/stab.h>
+# include <mach/machine.h>
 
 #ifdef __x86_64__
 	# define CPU_TYPE CPU_TYPE_X86_64
+	# define CPU_SUB_TYPE CPU_SUBTYPE_X86_ALL
 #endif
 #ifdef __i386__
 	# define CPU_TYPE CPU_TYPE_I386
+	# define CPU_SUB_TYPE CPU_SUBTYPE_X86_64_ALL
 #endif
 
 /*

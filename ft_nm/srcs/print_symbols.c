@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 16:07:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 17:09:23 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 23:06:51 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,11 @@ static bool					write_symbol(unsigned int const flags,
 	}
 	else if ((flags & F_G_MIN) == 0)
 	{
-		if ((flags & F_U_MIN) != 0 && (symbol.type & N_TYPE) == N_UNDF && (flags & F_U_MAJ) == 0)
+		if ((flags & F_U_MIN) != 0 && (symbol.type & N_TYPE) == N_UNDF && symbol.value == 0 && (flags
+				 & F_U_MAJ) == 0)
 			return (true);
-		else if ((flags & F_U_MAJ) != 0 && (symbol.type & N_TYPE) != N_UNDF && (flags & F_U_MIN) == 0)
+		else if ((flags & F_U_MAJ) != 0 && ((symbol.type & N_TYPE) != N_UNDF ||
+				symbol.value != 0) && (flags & F_U_MIN) == 0)
 			return (true);
 		else if ((flags & F_U_MIN) == 0 && (flags & F_U_MAJ) == 0)
 			return (true);

@@ -34,7 +34,7 @@
             }
             else
             {
-                $bin_prev = $bin;
+                //$bin_prev = $bin;
                 $valide_bin++;
             }
         }
