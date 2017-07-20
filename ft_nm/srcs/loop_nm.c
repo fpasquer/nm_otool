@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 13:23:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 17:08:53 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 15:12:19 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool						put_error_binaries(char const *path_name)
 	return (false);
 }
 
-static bool					reset_struct_nm(t_nm **nm)
+bool						reset_struct_nm(t_nm **nm, void *ptr)
 {
 	if (nm == NULL || *nm == NULL)
 		ERROR_EXIT("NM == NULL", __FILE__, NULL, NULL);
@@ -38,22 +38,24 @@ static bool					reset_struct_nm(t_nm **nm)
 		close((*nm)->fd);
 		(*nm)->fd = 0;
 	}
-	(*nm)->end = NULL;
+	//(*nm)->end = NULL;
 	if ((*nm)->p_name_cpy != NULL)
 		ft_memdel((void**)&(*nm)->p_name_cpy);
-	if ((*nm)->data != NULL && (*nm)->data != MAP_FAILED &&
+	if (ptr != NULL && ptr != MAP_FAILED &&
 			(*nm)->buff.st_size > 0)
-		munmap((*nm)->data, (*nm)->buff.st_size);
+		munmap(ptr, (*nm)->buff.st_size);
 	return (true);
 }
 
 bool						loop_nm(t_nm *nm, char const *path_name)
 {
+	void					*ptr;
 	bool					ret;
 	t_symbol				*symbol;
 
 	if (nm == NULL || path_name == NULL || (ret = true) == false)
 		ERROR_EXIT("NM or path_name == NULL", __FILE__, del_nm, &nm);
+	ptr = MAP_FAILED;
 	if (ft_strchr(path_name, '/') != NULL)
 		nm->p_name_cpy = ft_strdup(path_name);
 	else
@@ -63,13 +65,11 @@ bool						loop_nm(t_nm *nm, char const *path_name)
 	if ((nm->fd = ft_fopen(nm->p_name_cpy, "r")) <= 0 || fstat(nm->fd,
 			&nm->buff) == -1 || (nm->buff.st_mode & S_IFMT) == S_IFDIR)
 		ret = put_error_file(path_name);
-	//if (ret == true && (nm->buff.st_mode & S_IXUSR) == 0)
-		//ret = put_error_binaries(path_name);									permet de gerer les .o
-	if (ret == true && (nm->data = mmap(NULL, nm->buff.st_size, PROT_READ,
+	if (ret == true && (ptr = mmap(NULL, nm->buff.st_size, PROT_READ,
 			MAP_PRIVATE, nm->fd, 0)) == MAP_FAILED)
 		ERROR_EXIT("DATA NULL", __FILE__, del_nm, &nm);
-	nm->end = (char*)(ULLI)nm->data + (ULLI)nm->buff.st_size;
-	if (ret == true && (symbol = exe_nm(&nm, path_name)) != NULL)
-		gestion_symbols(&nm, &symbol, path_name);
-	return(reset_struct_nm(&nm));
+	nm->end = (char*)(ULLI)ptr + (ULLI)nm->buff.st_size;
+	if (ret == true && (symbol = exe_nm(&nm, path_name, ptr)) != NULL)
+		gestion_symbols(&nm, &symbol, path_name, ptr);
+	return(reset_struct_nm(&nm, ptr));
 }

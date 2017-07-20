@@ -6,14 +6,14 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:41:54 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 09:01:48 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 16:00:54 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_nm.h"
 
 static t_symbol				*save_output_64(t_nm **nm, struct symtab_command
-		const *sym)
+		const *sym, void const *ptr)
 {
 	char					*stringtable;
 	uint32_t				i;
@@ -25,8 +25,9 @@ static t_symbol				*save_output_64(t_nm **nm, struct symtab_command
 	if ((ret = (t_symbol *)ft_memalloc(sizeof(*ret) * sym->nsyms)) == NULL)
 		return (NULL);
 	i = 0;
-	array = (void*)(*nm)->data + sym->symoff;
-	stringtable = (void*)(*nm)->data + sym->stroff;
+
+	array = (void*)ptr + sym->symoff;
+	stringtable = (void*)ptr + sym->stroff;
 	(*nm)->nb_symbol = sym->nsyms;
 	while(i < sym->nsyms)
 	{
@@ -67,8 +68,8 @@ static char					*get_symbol_64_2(
 	return ("");
 }
 
-char						*get_symbol_64(t_nm const **nm,
-		t_symbol const symbol)
+char						*get_symbol_64(t_symbol const symbol,
+		void const *ptr)
 {
 	char					*ret;
 	uint32_t				i;
@@ -76,8 +77,8 @@ char						*get_symbol_64(t_nm const **nm,
 	struct load_command		*lc;
 	uint8_t					j;
 
-	header = (struct mach_header_64*)(*nm)->data;
-	lc = (void*)(*nm)->data + sizeof(*header);
+	header = (struct mach_header_64*)ptr;
+	lc = (void*)ptr + sizeof(*header);
 	i = 0;
 	j = 0;
 	while (i++ < header->ncmds)
@@ -95,7 +96,8 @@ char						*get_symbol_64(t_nm const **nm,
 }
 
 static t_symbol				*loop_func_64(t_nm **nm,
-		struct mach_header_64 const *header, struct load_command *lc)// changer header par la valeur de ncmds
+		struct mach_header_64 const *header, struct load_command *lc,
+		void const *ptr)// changer header par la valeur de ncmds
 {
 	uint32_t				i;
 
@@ -105,14 +107,14 @@ static t_symbol				*loop_func_64(t_nm **nm,
 	while (i++ < header->ncmds)
 	{
 		if (lc->cmd == LC_SYMTAB)
-			return (save_output_64(nm, (struct symtab_command const *)lc));
+			return (save_output_64(nm, (struct symtab_command const *)lc, ptr));
 		if ((void*)(lc = (void *)lc + lc->cmdsize) > (void*)(*nm)->end)
 			ERROR_EXIT("Ptr lc over the end 2", __FILE__, del_nm, nm);
 	}
 	return (NULL);
 }
 
-t_symbol					*func_64(t_nm **nm)
+t_symbol					*func_64(t_nm **nm, void *ptr)
 {
 	struct mach_header_64	*header;
 	struct load_command		*lc;
@@ -120,10 +122,10 @@ t_symbol					*func_64(t_nm **nm)
 	if (nm == NULL || *nm == NULL)
 		ERROR_EXIT("NM = NULL", __FILE__, NULL, NULL);
 	(*nm)->len_addr = LEN_64_BIT;
-	header = (struct mach_header_64*)(*nm)->data;
+	header = (struct mach_header_64*)ptr;
 	(*nm)->magic = header->magic;
-	if((void*)(lc = (void*)(*nm)->data + sizeof(*header)) >
+	if((void*)(lc = (void*)ptr + sizeof(*header)) >
 			(void*)(*nm)->end)
 		ERROR_EXIT("Ptr lc over the end", __FILE__, del_nm, nm);
-	return (loop_func_64(nm, header, lc));
+	return (loop_func_64(nm, header, lc, ptr));
 }

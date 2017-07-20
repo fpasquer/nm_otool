@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 22:52:37 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 16:11:47 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@
 # include <mach-o/nlist.h>
 # include <mach-o/fat.h>
 # include <mach-o/stab.h>
+
+#ifdef __x86_64__
+	# define CPU_TYPE CPU_TYPE_X86_64
+#endif
+#ifdef __i386__
+	# define CPU_TYPE CPU_TYPE_I386
+#endif
 
 //-j -n -u -p -U -r -A -g -o
 //nm [ -agnoprumxjlfPA [ s segname sectname ]] [ - ] [ -t format ] [[ -arch arch_flag ]...] [ file ... ]
@@ -65,7 +72,6 @@ typedef struct				s_symbol
 typedef struct				s_nm
 {
 	char					*p_name_cpy;
-	char					*data;
 	char					*end;
 	int						fd;
 	uint32_t				nb_symbol;
@@ -81,24 +87,26 @@ typedef struct				s_nm
 typedef struct				s_func_nm
 {
 	uint32_t				key;
-	t_symbol				*(*f)(t_nm **);
+	t_symbol				*(*f)(t_nm **, void *);
 }							t_func_nm;
+
+t_func_nm					g_func[NB_FUNC];
 
 t_nm						*init_flags(char const **argv);
 bool						loop_nm(t_nm *nm, char const *path_name);
 void						del_nm(void *nb);
 void						print_nm(t_nm *nm);
-t_symbol					*exe_nm(t_nm **nm, char const *name_bin);
+t_symbol					*exe_nm(t_nm **nm, char const *name_bin, void *ptr);
 void						gestion_symbols(t_nm **nm, t_symbol **symbol,
-		char const *name_file);
+		char const *name_file, void const *ptr);
 
-t_symbol					*func_32(t_nm **nm);
-t_symbol					*func_32_cigan(t_nm **nm);
-t_symbol					*func_64(t_nm **nm);
-t_symbol					*func_64_cigan(t_nm **nm);
-t_symbol					*error_magic_number(t_nm **nm);
-t_symbol					*func_fat_magic(t_nm **nm);
-t_symbol					*func_fat_cigam(t_nm **nm);
+t_symbol					*func_32(t_nm **nm, void *ptr);
+t_symbol					*func_32_cigan(t_nm **nm, void *ptr);
+t_symbol					*func_64(t_nm **nm, void *ptr);
+t_symbol					*func_64_cigan(t_nm **nm, void *ptr);
+t_symbol					*error_magic_number(t_nm **nm, void *ptr);
+t_symbol					*func_fat_magic(t_nm **nm, void *ptr);
+t_symbol					*func_fat_cigam(t_nm **nm, void *ptr);
 
 int							sort_ascii(const void *, const void *);
 int							sort_numerically(void const *a, void const *b);
@@ -108,12 +116,13 @@ void						sort_type_ascii_debug(t_symbol *symbol,
 		uint32_t type, uint32_t end_symbol, uint64_t value);
 
 void						print_symbols(t_nm const **nm,
-		t_symbol const *symbol, char const *name_file);
-char						*get_symbol_64(t_nm const **nm,
-		t_symbol const symbol);
-char						*get_symbol_32(t_nm const **nm,
-		t_symbol const symbol);
+		t_symbol const *symbol, char const *name_file, void const *ptr);
+char						*get_symbol_64(t_symbol const symbol,
+		void const *ptr);
+char						*get_symbol_32(t_symbol const symbol,
+		void const *ptr);
 char						*get_desc(t_symbol const symbol);
 bool						put_error_binaries(char const *path_name);
+bool						reset_struct_nm(t_nm **nm, void *ptr);
 
 #endif

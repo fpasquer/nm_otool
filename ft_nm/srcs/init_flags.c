@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:47:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 21:25:57 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 14:29:37 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_nm						*init_flags(char const **argv)
 	if ((nm = (t_nm*)ft_memalloc(sizeof(*nm))) == NULL)
 		ERROR_EXIT("Malloc failled", __FILE__, NULL, NULL);
 	nm->flags = F_NONE;
-	nm->data = MAP_FAILED;														// pour initialuser le pointer de data et empecher le munmap
+	//nm->data = MAP_FAILED;														// pour initialuser le pointer de data et empecher le munmap
 	i = 0;
 	while (argv[i] != NULL)
 	{
@@ -99,7 +99,7 @@ t_nm						*init_flags(char const **argv)
 		else if (argv[i][j] == '-' && argv[i][j + 1] == '\0')
 			show_error_options(argv[i][j]);
 		else
-			nm->nb_file = i > 1 ? nm->nb_file + 1 : nm->nb_file;
+			nm->nb_file = i > 0 ? nm->nb_file + 1 : nm->nb_file;
 		i++;
 	}
 	check_flags(&nm);

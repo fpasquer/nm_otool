@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/15 15:13:29 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 16:18:35 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 15:02:19 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ static void					del_symbols(t_symbol **symbol,
 }
 
 void						gestion_symbols(t_nm **nm, t_symbol **symbol,
-		char const *name_file)
+		char const *name_file, void const *ptr)
 {
 	if (nm == NULL || *nm == NULL || symbol == NULL || *symbol == NULL)
 		ERROR_EXIT("Invalid values", __FILE__, del_nm, nm);
 	sort_symbols(*nm, *symbol);
-	print_symbols((t_nm const **)nm, *symbol, name_file);
+	print_symbols((t_nm const **)nm, *symbol, name_file, ptr);
 	del_symbols(symbol, (*nm)->nb_symbol);
 }

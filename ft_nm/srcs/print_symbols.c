@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 16:07:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/19 22:52:40 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/20 15:02:22 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 #define ADD_PRINT_SPACE(s) add_cache_print(s); add_cache_print(" ");
 #define ADD_PRINT_NAME(s) { add_cache_print(s); add_cache_print(": ");}
 
-static char					*get_type(t_nm const **nm, t_symbol const symbol)
+static char					*get_type(t_nm const **nm, t_symbol const symbol,
+		void const *ptr)
 {
 	uint8_t					type;
 	uint8_t					ext;
@@ -30,8 +31,8 @@ static char					*get_type(t_nm const **nm, t_symbol const symbol)
 	else if (type == N_ABS)
 		return (ext == 0 ? "a" : "A");
 	else if (type == N_SECT)
-		return ((*nm)->magic == MH_MAGIC_64 ? get_symbol_64(nm, symbol) :
-				get_symbol_32(nm, symbol));
+		return ((*nm)->magic == MH_MAGIC_64 ? get_symbol_64(symbol, ptr) :
+				get_symbol_32(symbol, ptr));
 	else if (type == N_PBUD)
 		return (ext == 0 ? "u" : "U");
 	else if (type == N_INDR)
@@ -55,7 +56,7 @@ static void					place_value(char *buff, size_t max)
 }
 
 static void					print_symbol(t_nm const **nm, t_symbol const symbol,
-		char const *bin_name)
+		char const *bin_name, void const *ptr)
 {
 	char					buff_value[LEN_64_BIT + 1];
 
@@ -74,7 +75,7 @@ static void					print_symbol(t_nm const **nm, t_symbol const symbol,
 					sizeof(char) * ((*nm)->magic == MH_MAGIC_64 ? LEN_64_BIT :
 					LEN_32_BIT));
 		ADD_PRINT_SPACE(buff_value);
-		ADD_PRINT_SPACE(get_type(nm, symbol));
+		ADD_PRINT_SPACE(get_type(nm, symbol, ptr));
 		if (((*nm)->flags & F_A_MIN) != 0)
 		{
 			ADD_PRINT_SPACE(get_desc(symbol));
@@ -84,7 +85,8 @@ static void					print_symbol(t_nm const **nm, t_symbol const symbol,
 	add_cache_print("\n");
 }
 
-static bool					write_symbol(unsigned int flags, t_symbol symbol)
+static bool					write_symbol(unsigned int const flags,
+		t_symbol const symbol)
 {
 	if (!((flags & F_A_MIN) != 0 || (symbol.type & N_STAB) == 0))
 		return (false);
@@ -107,7 +109,7 @@ static bool					write_symbol(unsigned int flags, t_symbol symbol)
 }
 
 void						print_symbols(t_nm const **nm,
-		t_symbol const *symbol, char const *name_file)
+		t_symbol const *symbol, char const *name_file, void const *ptr)
 {
 	uint32_t				i;
 	uint32_t				decalage;
@@ -128,7 +130,7 @@ void						print_symbols(t_nm const **nm,
 	while (i != end)
 	{
 		if (write_symbol((*nm)->flags, symbol[i]) == true)
-			print_symbol(nm, symbol[i], name_file);
+			print_symbol(nm, symbol[i], name_file, ptr);
 		i += decalage;
 	}
 	print_cache();
