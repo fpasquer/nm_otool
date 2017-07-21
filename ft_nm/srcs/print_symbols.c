@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 16:07:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 23:06:51 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/21 10:53:59 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,26 +85,27 @@ static void					print_symbol(t_nm const **nm, t_symbol const symbol,
 	add_cache_print("\n");
 }
 
-static bool					write_symbol(unsigned int const flags,
-		t_symbol const symbol)
+static bool					write_symbol(unsigned int const f,
+		t_symbol const s)
 {
-	if (!((flags & F_A_MIN) != 0 || (symbol.type & N_STAB) == 0))
+	if (!((f & F_A_MIN) != 0 || (s.type & N_STAB) == 0))
 		return (false);
-	if ((flags & F_G_MIN) != 0 && (symbol.type & N_EXT) != 0)
+	if ((f & F_G_MIN) != 0 && (s.type & N_EXT) != 0)
 	{
-		if (((symbol.type & N_TYPE) != N_UNDF && (flags & F_U_MIN) == 0) ||
-				((symbol.type & N_TYPE) == N_UNDF && (flags & F_U_MAJ) == 0))
+		if (((s.type & N_TYPE) != N_UNDF && (f & F_U_MIN) == 0) || ((s.type
+				& N_TYPE) == N_UNDF && ((s.value == 0 && (f & F_U_MAJ) == 0)
+				|| (s.value != 0 && (f & F_U_MAJ) != 0)))) 
 			return (true);
 	}
-	else if ((flags & F_G_MIN) == 0)
+	else if ((f & F_G_MIN) == 0)
 	{
-		if ((flags & F_U_MIN) != 0 && (symbol.type & N_TYPE) == N_UNDF && symbol.value == 0 && (flags
-				 & F_U_MAJ) == 0)
+		if ((f & F_U_MIN) != 0 && (s.type & N_TYPE) == N_UNDF && s.value ==
+				0 && (f & F_U_MAJ) == 0)
 			return (true);
-		else if ((flags & F_U_MAJ) != 0 && ((symbol.type & N_TYPE) != N_UNDF ||
-				symbol.value != 0) && (flags & F_U_MIN) == 0)
-			return (true);
-		else if ((flags & F_U_MIN) == 0 && (flags & F_U_MAJ) == 0)
+		else if ((f & F_U_MAJ) != 0 && ((s.type & N_TYPE) != N_UNDF || (f &
+				F_N_MIN) != 0) && (f & F_U_MIN) == 0)
+			return ((s.value || (s.type & N_TYPE) != N_UNDF) ? true : false);
+		else if ((f & F_U_MIN) == 0 && (f & F_U_MAJ) == 0)
 			return (true);
 	}
 	return (false);
