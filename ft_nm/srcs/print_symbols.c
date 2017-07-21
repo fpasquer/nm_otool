@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 16:07:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/21 10:53:59 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/21 16:32:09 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ static bool					write_symbol(unsigned int const f,
 		return (false);
 	if ((f & F_G_MIN) != 0 && (s.type & N_EXT) != 0)
 	{
-		if (((s.type & N_TYPE) != N_UNDF && (f & F_U_MIN) == 0) || ((s.type
-				& N_TYPE) == N_UNDF && ((s.value == 0 && (f & F_U_MAJ) == 0)
-				|| (s.value != 0 && (f & F_U_MAJ) != 0)))) 
-			return (true);
+		if (((s.type & N_TYPE) != N_UNDF && (f & F_U_MIN) == 0) || ( (s.type &
+				N_TYPE) == N_UNDF && ((s.value == 0 && (f & F_U_MAJ) == 0) ||
+				(s.value != 0 && ((f & F_U_MAJ) != 0 || (f & F_U_MIN) == 0)))))
+			return ((f & F_U_MIN) != 0 && (f & F_U_MAJ) != 0 ? false : true);
 	}
 	else if ((f & F_G_MIN) == 0)
 	{
@@ -103,7 +103,8 @@ static bool					write_symbol(unsigned int const f,
 				0 && (f & F_U_MAJ) == 0)
 			return (true);
 		else if ((f & F_U_MAJ) != 0 && ((s.type & N_TYPE) != N_UNDF || (f &
-				F_N_MIN) != 0) && (f & F_U_MIN) == 0)
+				F_N_MIN) != 0 || ((s.type & N_TYPE) == N_UNDF && s.value != 0))
+				&& (f & F_U_MIN) == 0)
 			return ((s.value || (s.type & N_TYPE) != N_UNDF) ? true : false);
 		else if ((f & F_U_MIN) == 0 && (f & F_U_MAJ) == 0)
 			return (true);
