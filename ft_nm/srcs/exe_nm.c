@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 11:42:21 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 21:27:28 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/21 18:19:06 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 t_func_nm					g_func[NB_FUNC] =
 {
 	{MH_MAGIC, func_32},
-	{MH_CIGAM, func_32_cigan},
+	{MH_CIGAM, func_32_cigam},
 	{MH_MAGIC_64, func_64},
-	{MH_CIGAM_64, func_64_cigan},
+	{MH_CIGAM_64, func_64_cigam},
 	{FAT_MAGIC, func_fat_magic},
 	{FAT_CIGAM, func_fat_cigam}
 };
