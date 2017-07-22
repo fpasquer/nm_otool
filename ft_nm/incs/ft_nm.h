@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/21 18:18:58 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/22 16:31:11 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <mach-o/fat.h>
 # include <mach-o/stab.h>
 # include <mach/machine.h>
+# include <ar.h>
+# include <mach-o/ranlib.h>
 
 #ifdef __x86_64__
 	# define CPU_TYPE CPU_TYPE_X86_64
@@ -85,6 +87,7 @@ typedef struct				s_nm
 	unsigned int			nb_file;
 	unsigned int			flags;
 	size_t					len_addr;
+	size_t					size_mem;
 	struct stat				buff;
 }							t_nm;
 
@@ -113,9 +116,11 @@ t_symbol					*func_64_cigam(t_nm **nm, void *ptr, char const *name_bin);
 t_symbol					*error_magic_number(t_nm **nm, void *ptr, char const *name_bin);
 t_symbol					*func_fat_magic(t_nm **nm, void *ptr, char const *name_bin);
 t_symbol					*func_fat_cigam(t_nm **nm, void *ptr, char const *name_bin);
+t_symbol					*func_armag_magic(t_nm **nm, void *ptr,char const *name_bin);
 
 int							sort_ascii(const void *, const void *);
 int							sort_numerically(void const *a, void const *b);
+int							sort_lib_desc(void const *a, void const *b);
 void						sort_type_ascii(t_symbol *symbol, uint32_t type,
 		uint32_t end_symbol);
 void						sort_type_ascii_debug(t_symbol *symbol,
@@ -130,5 +135,6 @@ char						*get_symbol_32(t_symbol const symbol,
 char						*get_desc(t_symbol const symbol);
 bool						put_error_binaries(char const *path_name);
 bool						reset_struct_nm(t_nm **nm, void *ptr);
+uint32_t					b_to_l_endian(uint32_t num);
 
 #endif

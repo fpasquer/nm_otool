@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/15 15:20:35 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/21 09:49:53 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/22 16:31:25 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,18 @@ void						sort_type_ascii(t_symbol *symbol, uint32_t type,
 	}
 	if (start != NULL && nb_symbol > 0)
 		ft_qsort(start, nb_symbol, sizeof(*symbol), sort_ascii);
+}
+
+int							sort_lib_desc(void const *a, void const *b)
+{
+	struct ranlib			*a_cpy;
+	struct ranlib			*b_cpy;
+
+	a_cpy = (struct ranlib*)a;
+	b_cpy = (struct ranlib*)b;
+	if (a_cpy->ran_off > b_cpy->ran_off)
+		return (-1);
+	else if (a_cpy->ran_off < b_cpy->ran_off)
+		return (1);
+	return (0);
 }

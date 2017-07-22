@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:41:54 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 21:19:18 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/22 11:46:11 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,12 @@ t_symbol					*func_64(t_nm **nm, void *ptr, char const *name_bin)
 
 	if (nm == NULL || *nm == NULL || ptr == NULL || name_bin == NULL)
 		ERROR_EXIT("NM = NULL", __FILE__, NULL, NULL);
+	if ((*nm)->buff.st_size <= (off_t)sizeof(struct mach_header_64))
+		return (NULL);
 	(*nm)->len_addr = LEN_64_BIT;
 	header = (struct mach_header_64*)ptr;
 	(*nm)->magic = header->magic;
-	if((void*)(lc = (void*)ptr + sizeof(*header)) >
+	if((void*)(lc = (void*)ptr + sizeof(*header)) + sizeof(*lc) >
 			(void*)(*nm)->end)
 		ERROR_EXIT("Ptr lc over the end", __FILE__, del_nm, nm);
 	return (loop_func_64(nm, header, lc, ptr));

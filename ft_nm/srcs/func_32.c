@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:38:13 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 16:43:00 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/22 11:46:34 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,12 @@ t_symbol					*func_32(t_nm **nm, void *ptr, char const *name_bin)
 
 	if (nm == NULL || *nm == NULL || ptr == NULL || name_bin == NULL)
 		ERROR_EXIT("NM or CURS = NULL", __FILE__, del_nm, nm);
+	if ((*nm)->buff.st_size <= (off_t)sizeof(struct mach_header))
+		return (NULL);
 	(*nm)->len_addr = LEN_32_BIT;
 	header = (struct mach_header*)ptr;
 	(*nm)->magic = header->magic;
-	if((void*)(lc = (void*)ptr + sizeof(*header)) >
+	if((void*)(lc = (void*)ptr + sizeof(*header)) + sizeof(*lc) >
 			(void*)(*nm)->end)
 		ERROR_EXIT("Ptr lc over the end", __FILE__, del_nm, nm);
 	lc = (void*)lc;

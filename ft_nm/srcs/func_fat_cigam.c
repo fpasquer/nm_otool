@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 17:49:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 22:48:04 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/21 21:14:33 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ t_symbol					*func_fat_cigam(t_nm **nm, void *ptr,
 
 	if (nm == NULL || *nm == NULL || ptr == NULL || name_bin == NULL)
 		ERROR_EXIT("NM = NULL", __FILE__, NULL, NULL);
+	if ((*nm)->buff.st_size <= (off_t)sizeof(struct fat_header))
+		return (NULL);
 	(*nm)->fat = true;
 	header = (struct fat_header*)ptr;
 	return (loop_fat(nm, b_to_l_endian(header->nfat_arch), ptr, name_bin));
