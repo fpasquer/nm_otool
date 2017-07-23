@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 13:23:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/22 21:17:27 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/23 13:02:13 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ bool						loop_nm(t_nm *nm, char const *path_name)
 		nm->p_name_cpy = ft_strdup(path_name);
 	else
 		nm->p_name_cpy = ft_strjoin("./", path_name);
-	if (nm->p_name_cpy == NULL || init_cache_print(STDOUT_FILENO) == false)
+	if (nm->p_name_cpy == NULL)
 		ERROR_EXIT("p_name_cpy == NULL", __FILE__, del_nm, &nm);
 	if ((nm->fd = ft_fopen(nm->p_name_cpy, "r")) <= 0 || fstat(nm->fd,
 			&nm->buff) == -1 || (nm->buff.st_mode & S_IFMT) == S_IFDIR)

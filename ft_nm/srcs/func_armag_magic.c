@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 21:00:53 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/23 11:57:06 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/23 13:28:57 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,31 @@ static char					*get_name_symbol(void const *ptr, size_t *length)
 	return ((char*)ptr + sizeof(struct ar_hdr));
 }
 
-static void					print_arch_symbol(t_nm **nm, char const *name_lib, char const *name_obj,
-		void *ptr)
+static void					print_arch_symbol(t_nm **nm, char const *name_lib,
+		char const *name_obj, void *ptr)
 {
+	char					*name_cpy;
 	t_symbol				*sym;
 
 	if (nm == NULL || *nm == NULL || name_lib == NULL || ptr == NULL)
 		ERROR_EXIT("NM = NULL", __FILE__, NULL, NULL);
-	add_cache_print("\n");
-	add_cache_print(name_lib);
-	add_cache_print("(");
-	add_cache_print(name_obj);
-	add_cache_print("):\n");
-	if ((sym = exe_nm(nm, name_lib, ptr)) != NULL)
+	if (((*nm)->flags & F_A_MAJ) == 0 && ((*nm)->flags & F_O_MIN) == 0)
 	{
-		gestion_symbols(nm, &sym, name_lib, ptr);
+		if ((name_cpy = ft_multijoin(4, name_lib,"(", name_obj, ")")) == NULL)
+			ERROR_EXIT("NAME_CPY failled", __FILE__, del_nm, nm);
+		add_cache_print("\n");
+		add_cache_print(name_cpy);
+		add_cache_print(":\n");
+	}
+	else
+		if ((name_cpy = ft_multijoin(3, name_lib,":", name_obj)) == NULL)
+			ERROR_EXIT("NAME_CPY failled 2", __FILE__, del_nm, nm);
+	if ((sym = exe_nm(nm, name_cpy, ptr)) != NULL)
+	{
+		gestion_symbols(nm, &sym, name_cpy, ptr);
 		reset_struct_nm(nm, ptr);
 	}
+	ft_memdel((void**)&name_cpy);
 }
 
 static t_symbol				*save_sort_prit_symbol(t_nm **nm, void *ptr,

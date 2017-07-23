@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 16:07:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/22 21:16:45 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/23 13:03:30 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,5 +137,4 @@ void						print_symbols(t_nm const **nm,
 			print_symbol(nm, symbol[i], name_file, ptr);
 		i += decalage;
 	}
-	print_cache();
 }

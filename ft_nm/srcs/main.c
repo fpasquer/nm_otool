@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:05:56 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 14:29:00 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/23 13:03:03 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int							main(int argc, char **argv)
 	int						j;
 	t_nm					*nm;
 
-	if ((nm = init_flags((const char **)argv)) == NULL)
+	if (!(nm = init_flags((const char **)argv)) || init_cache_print(1) == false)
 		ERROR_EXIT("nm == NULL", __FILE__, NULL, NULL);
 	if (argc <= 1)
 		loop_nm(nm, "a.out");

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 10:59:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 14:30:55 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/23 13:03:41 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ void						del_nm(void *nm)
 		close((*nm_ptr)->fd);
 	if ((*nm_ptr) != NULL)
 		ft_memdel((void**)nm_ptr);
+	print_cache();
 }
