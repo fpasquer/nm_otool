@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 16:07:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/21 16:32:09 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/22 21:16:45 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void						print_symbols(t_nm const **nm,
 	uint32_t				decalage;
 	uint32_t				end;
 
-	if (!nm || !(*nm) || !symbol || !init_cache_print(STDOUT_FILENO))
+	if (!nm || !(*nm) || !symbol)
 		ERROR_EXIT("Invalid values", __FILE__, NULL, NULL);
 	i = (((*nm)->flags & F_R_MIN) != 0) ? (*nm)->nb_symbol - 1 : 0;
 	decalage = (((*nm)->flags & F_R_MIN) != 0) ? -1 : 1;
