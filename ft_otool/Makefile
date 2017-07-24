@@ -6,18 +6,16 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/05/17 16:07:18 by fpasquer          #+#    #+#              #
-#    Updated: 2017/07/21 21:05:45 by fpasquer         ###   ########.fr        #
+#    Updated: 2017/07/24 11:45:02 by fpasquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			= ft_nm
+NAME			= ft_otool
 
-SRC_NAME		= main.c init_flags.c del_nm.c loop_nm.c exe_nm.c func_32.c		\
-				  func_32_cigam.c func_64.c func_64_cigam.c func_fat_cigam.c	\
-				  func_fat_magic.c symbols.c sorts.c print_symbols.c get_desc.c	\
-				  func_armag_magic.c
+SRC_NAME		= main.c ft_otool.c util.c exe_otool.c func_32.c func_64.c		\
+				  func_fat.c
 
-INCLUDES		= ft_nm.h
+INCLUDES		= ft_otool.h
 
 LIBRARY			= libft/libft.a
 
