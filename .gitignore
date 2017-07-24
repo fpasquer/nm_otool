@@ -8,3 +8,4 @@ base
 test
 ft_otool
 ft_otool_32
+*.dSYM
