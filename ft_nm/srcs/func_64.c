@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:41:54 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/22 11:46:11 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/25 14:11:29 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ static t_symbol				*save_output_64(t_nm **nm, struct symtab_command
 	if ((ret = (t_symbol *)ft_memalloc(sizeof(*ret) * sym->nsyms)) == NULL)
 		return (NULL);
 	i = 0;
-
-	array = (void*)ptr + sym->symoff;
+	if ((void*)(array = (void*)ptr + sym->symoff) + sizeof(*array) * sym->nsyms
+			> (void*)(*nm)->end)
+		ERROR_EXIT("PTR OVERFLOW 3", __FILE__, NULL, NULL);
 	stringtable = (void*)ptr + sym->stroff;
 	(*nm)->nb_symbol = sym->nsyms;
 	while(i < sym->nsyms)

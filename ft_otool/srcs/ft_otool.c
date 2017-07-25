@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 10:16:25 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/24 11:43:46 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/25 15:13:35 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static int					init_stat_otool(t_otool *otool)
 			otool->fd, 0)) == MAP_FAILED)
 		return (put_error_file("MMAP failled"));
 	otool->end = (void*)otool->ptr + otool->stat.st_size;
-	printf("size = %d\n", (int)otool->stat.st_size);
 	return (true);
 }
 
