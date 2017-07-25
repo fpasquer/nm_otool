@@ -6,13 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:13:43 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/24 11:43:32 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/24 11:56:23 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_otool.h"
 
-t_func_struct				g_funcs[] = 
+t_func_struct				g_funcs[] =
 {
 	{MH_MAGIC, func_32},
 	{MH_CIGAM, func_32},
@@ -34,10 +34,6 @@ void						*exe_otool(t_otool otool, char const *name,
 		return((void*)put_error_file("Over the end hjxgv cjzhgvx xj"));
 	magic_number = *(uint32_t*)ptr;
 	i = 0;
-/*
-void						*func_fat(t_otool *otool, char const *name,
-		void const *ptr);
-*/
 	while (i < NB_FUNC)
 		if (magic_number == g_funcs[i++].key)
 			return (g_funcs[i - 1].func(&otool, name, ptr));

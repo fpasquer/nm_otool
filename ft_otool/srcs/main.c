@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 10:09:23 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/24 10:22:02 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/25 10:22:58 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ int							main(int argc, char **argv)
 		ft_putstr_fd("ft_otool <object file>\n", STDERR_FILENO);
 	else
 	{
+		init_cache_print(STDOUT_FILENO);
 		i = 1;
 		while (argv[i] != NULL)
 			ft_otool(argv[i++]);
+		print_cache();
 	}
 	return (EXIT_SUCCESS);
 }

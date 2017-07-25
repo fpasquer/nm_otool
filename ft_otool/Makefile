@@ -6,14 +6,14 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/05/17 16:07:18 by fpasquer          #+#    #+#              #
-#    Updated: 2017/07/24 11:45:02 by fpasquer         ###   ########.fr        #
+#    Updated: 2017/07/25 10:23:14 by fpasquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= ft_otool
 
 SRC_NAME		= main.c ft_otool.c util.c exe_otool.c func_32.c func_64.c		\
-				  func_fat.c
+				  func_fat.c print_segments.c
 
 INCLUDES		= ft_otool.h
 
