@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 10:16:25 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/25 15:13:35 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/25 16:18:37 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ void						ft_otool(char const *name)
 		return ;
 	otool.ptr = MAP_FAILED;
 	if (init_stat_otool(&otool) == true)
-		exe_otool(otool, name, otool.ptr);
+		exe_otool(&otool, name, otool.ptr);
 	del_otool(&otool);
 }

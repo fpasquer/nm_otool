@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:45:09 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/25 15:18:47 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/25 15:29:52 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void						*func_32(t_otool *otool, char const *name,
 			(void*)otool->end)
 		return ((void*)put_error_file("Over the end asjdkha ksjdhasjda lksd"));
 	otool->cigam = (head->magic == MH_CIGAM) ? true : false;
-	otool->bits64 = true;
+	otool->bits64 = false;
 	if ((void*)(lc = (void*)ptr + sizeof(*head)) + sizeof(*lc) >=
 			(void*)otool->end)
 		return ((void*)put_error_file("Over the end adhaasdsjda lksd"));
