@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:50:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/25 15:14:18 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/26 13:16:20 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 static void					*get_segment_64(t_otool *otool, char const *name,
 		struct segment_command_64 *secCmd, void const *ptr)
 {
+	uint32_t				offset;
+	uint64_t				size;
 	struct section_64		*sec;
 
 	if (otool == NULL || secCmd == NULL || ptr == NULL || name == NULL)
@@ -25,8 +27,19 @@ static void					*get_segment_64(t_otool *otool, char const *name,
 			(void*)otool->end)
 		return ((void*)put_error_file("Over the end dqwid qjwd gjqwg"));
 	print_header(name, sec->segname, sec->sectname);
-	print_line(sec->offset + 0x100000000, sec->size, LEN_64_BIT, ptr +
-			sec->offset);
+	/*
+		print_line(addr + i, length - i, len, ptr + i);
+	*/
+	size = sec->size;
+	offset = sec->offset;
+	while (1)
+	{
+		print_line(offset + secCmd->vmaddr, size, LEN_64_BIT, ptr + offset);
+		if (size < NB_EACH_LINE)
+			break ;
+		offset += NB_EACH_LINE;
+		size -= NB_EACH_LINE;
+	}
 	return (NULL);
 }
 
