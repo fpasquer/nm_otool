@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:50:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/26 14:13:33 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/26 14:37:28 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void					*get_segment_64(t_otool *otool, char const *name,
 	while (1)
 	{
 		print_value(value + secCmd->vmaddr, LEN_64_BIT, size);
+		if ((void*)(ptr + offset + NB_EACH_LINE) > otool->end)
+			return ((void*)put_error_file("Over the end asdasdsasdadsadassa"));
 		print_line(size, ptr + offset);
 		if (size <= NB_EACH_LINE)
 			break ;

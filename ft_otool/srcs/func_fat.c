@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:50:46 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/25 16:20:02 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/26 14:44:48 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ void						*func_fat(t_otool *otool, char const *name,
 				return exe_otool(otool, name, ptr + ((otool->cigam)? b_to_l_endian(arch->offset) : arch->offset));
 		arch = (void*)arch + sizeof(*arch);
 	}
-																				printf("Fat bits\n");
 	return (NULL);
 }
