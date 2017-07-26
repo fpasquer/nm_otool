@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:45:09 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/26 13:18:55 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/26 14:05:05 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ static void					*get_segment_32(t_otool *otool, char const *name,
 	offset = sec->offset;
 	while (1)
 	{
-		print_line(offset + secCmd->vmaddr, size, LEN_32_BIT, ptr + offset);
-		if (size < NB_EACH_LINE)
+		print_value(offset + secCmd->vmaddr, LEN_32_BIT, size);
+		print_line(size, ptr + offset);
+		if (size <= NB_EACH_LINE)
 			break ;
 		offset += NB_EACH_LINE;
 		size -= NB_EACH_LINE;
