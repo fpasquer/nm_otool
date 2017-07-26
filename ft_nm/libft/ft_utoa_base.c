@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 21:59:28 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/25 14:23:26 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/26 17:39:25 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ bool						ft_utoa_base_tab(unsigned long long int nb,
 			'6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 	unsigned long long int	nb_mem;
 
-	printf("nb = %llu\n", nb);
-	
 	if (max <= 0 || tab == NULL || base < 2 || base > MAX_BASE)
 		return (false);
 	i = 0;
