@@ -6,13 +6,24 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:50:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/26 14:37:28 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/26 15:14:13 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_otool.h"
 
 #define STRUCT struct segment_command_64*
+
+static void					increment_var(uint32_t *offset, uint32_t *value,
+		uint64_t *size)
+{
+	if (offset != NULL && value != NULL && size != NULL)
+	{
+		*offset += NB_EACH_LINE;
+		*value += NB_EACH_LINE;
+		*size -= NB_EACH_LINE;
+	}
+}
 
 static void					*get_segment_64(t_otool *otool, char const *name,
 		struct segment_command_64 *secCmd, void const *ptr)
@@ -39,9 +50,7 @@ static void					*get_segment_64(t_otool *otool, char const *name,
 		print_line(size, ptr + offset);
 		if (size <= NB_EACH_LINE)
 			break ;
-		offset += NB_EACH_LINE;
-		value += NB_EACH_LINE;
-		size -= NB_EACH_LINE;
+		increment_var(&offset, &value, &size);
 	}
 	return (NULL);
 }

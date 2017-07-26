@@ -6,13 +6,24 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:45:09 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/26 14:43:05 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/26 15:13:33 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_otool.h"
 
 #define STRUCT struct segment_command*
+
+static void					increment_var(uint32_t *offset, uint32_t *value,
+		uint64_t *size)
+{
+	if (offset != NULL && value != NULL && size != NULL)
+	{
+		*offset += NB_EACH_LINE;
+		*value += NB_EACH_LINE;
+		*size -= NB_EACH_LINE;
+	}
+}
 
 static void					*get_segment_32(t_otool *otool, char const *name,
 		struct segment_command *secCmd, void const *ptr)
@@ -30,7 +41,7 @@ static void					*get_segment_32(t_otool *otool, char const *name,
 	print_header(name, sec->segname, sec->sectname);
 	size = sec->size;
 	offset = sec->offset;
-	value = ft_strcmp(secCmd->segname, "") != 0? sec->offset : 0;
+	value = ft_strcmp(secCmd->segname, "") != 0 ? sec->offset : 0;
 	while (1)
 	{
 		print_value(value + secCmd->vmaddr, LEN_32_BIT, size);
@@ -39,9 +50,7 @@ static void					*get_segment_32(t_otool *otool, char const *name,
 		print_line(size, ptr + offset);
 		if (size <= NB_EACH_LINE)
 			break ;
-		offset += NB_EACH_LINE;
-		value += NB_EACH_LINE;
-		size -= NB_EACH_LINE;
+		increment_var(&offset, &value, &size);
 	}
 	return (NULL);
 }

@@ -6,11 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:50:46 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/26 14:44:48 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/07/26 14:54:59 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_otool.h"
+
+#define B_TO_L(m, v) ((v) ? b_to_l_endian(v) : v)
 
 void						*func_fat(t_otool *otool, char const *name,
 		void const *ptr)
@@ -33,9 +35,10 @@ void						*func_fat(t_otool *otool, char const *name,
 	i = 0;
 	while (i++ < end)
 	{
-		if (CPU_TYPE == ((otool->cigam)? b_to_l_endian(arch->cputype) : arch->cputype))
-			if ((void*)(ptr + ((otool->cigam)? b_to_l_endian(arch->offset) : arch->offset)) < otool->end)
-				return exe_otool(otool, name, ptr + ((otool->cigam)? b_to_l_endian(arch->offset) : arch->offset));
+		if (CPU_TYPE == (B_TO_L(otool->cigam, arch->cputype)))
+			if ((void*)(ptr + B_TO_L(otool->cigam, arch->offset)) < otool->end)
+				return exe_otool(otool, name, ptr + (B_TO_L(otool->cigam,
+						arch->offset)));
 		arch = (void*)arch + sizeof(*arch);
 	}
 	return (NULL);
