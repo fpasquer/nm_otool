@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 13:24:32 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 14:27:16 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/08/13 13:38:18 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ char						*get_desc(t_symbol const symbol)
 	while (i++ < NB_DESC)
 		if (symbol.desc == g_tab_desc[i - 1].key)
 			return (g_tab_desc[i - 1].value);
-	printf("desc = %03x\n", symbol.desc & REFERENCE_TYPE);
+	/*printf("desc = %03x\n", symbol.desc & REFERENCE_TYPE);*/
 	return ("ERROR");
 }

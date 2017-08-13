@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 21:00:53 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/24 10:07:58 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/08/06 10:53:14 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,18 @@ static void					print_arch_symbol(t_nm **nm, char const *name_lib,
 	t_symbol				*sym;
 
 	if (nm == NULL || *nm == NULL || name_lib == NULL || ptr == NULL)
-		ERROR_EXIT("NM = NULL", __FILE__, NULL, NULL);
+		ERROR_VOID("NM = NULL", __FILE__, NULL, NULL);
 	if (((*nm)->flags & F_A_MAJ) == 0 && ((*nm)->flags & F_O_MIN) == 0)
 	{
 		if ((name_cpy = ft_multijoin(4, name_lib,"(", name_obj, ")")) == NULL)
-			ERROR_EXIT("NAME_CPY failled", __FILE__, del_nm, nm);
+			ERROR_VOID("NAME_CPY failled", __FILE__, del_nm, nm);
 		add_cache_print("\n");
 		add_cache_print(name_cpy);
 		add_cache_print(":\n");
 	}
 	else
 		if ((name_cpy = ft_multijoin(3, name_lib,":", name_obj)) == NULL)
-			ERROR_EXIT("NAME_CPY failled 2", __FILE__, del_nm, nm);
+			ERROR_VOID("NAME_CPY failled 2", __FILE__, del_nm, nm);
 	if ((sym = exe_nm(nm, name_cpy, ptr)) != NULL)
 	{
 		gestion_symbols(nm, &sym, name_cpy, ptr);

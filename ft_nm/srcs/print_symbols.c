@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 16:07:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/23 13:03:30 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/08/06 10:52:43 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void					print_symbol(t_nm const **nm, t_symbol const symbol,
 	if (((*nm)->flags & F_J_MIN) == 0)
 	{
 		if(ft_utoa_base_tab(symbol.value, 16, buff_value, LEN_64_BIT) == false)
-			ERROR_EXIT("Invalid symbol value", __FILE__, NULL, NULL);
+			ERROR_VOID("Invalid symbol value", __FILE__, NULL, NULL);
 		if (symbol.value != 0 || (symbol.type & N_STAB) != 0)
 			place_value(buff_value, (*nm)->magic == MH_MAGIC_64 ? LEN_64_BIT :
 					LEN_32_BIT);
@@ -120,7 +120,7 @@ void						print_symbols(t_nm const **nm,
 	uint32_t				end;
 
 	if (!nm || !(*nm) || !symbol)
-		ERROR_EXIT("Invalid values", __FILE__, NULL, NULL);
+		ERROR_VOID("Invalid values", __FILE__, NULL, NULL);
 	i = (((*nm)->flags & F_R_MIN) != 0) ? (*nm)->nb_symbol - 1 : 0;
 	decalage = (((*nm)->flags & F_R_MIN) != 0) ? -1 : 1;
 	end = (((*nm)->flags & F_R_MIN) != 0) ? 0 + -1 : (*nm)->nb_symbol;

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/15 15:20:35 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/22 16:31:25 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/08/06 10:47:40 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void						sort_type_ascii_debug(t_symbol *symbol,
 	size_t					nb_symbol;
 
 	if (symbol == NULL || end_symbol == 0)
-		ERROR_EXIT("Symbol debug NULL", __FILE__, NULL, NULL);
+		ERROR_VOID("Symbol debug NULL", __FILE__, NULL, NULL);
 	nb_symbol = 0;
 	i = 0;
 	while (i < end_symbol && (symbol[i].type & N_TYPE) == type)
@@ -93,7 +93,7 @@ void						sort_type_ascii(t_symbol *symbol, uint32_t type,
 	size_t					nb_symbol;
 
 	if (symbol == NULL || end_symbol == 0)
-		ERROR_EXIT("Symbol NULL", __FILE__, NULL, NULL);
+		ERROR_VOID("Symbol NULL", __FILE__, NULL, NULL);
 	nb_symbol = 0;
 	i = 0;
 	while (i < end_symbol && (symbol[i].type & N_TYPE) != type)

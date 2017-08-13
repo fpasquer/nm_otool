@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:47:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 21:18:40 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/08/06 10:46:16 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void					save_flags(char const *argv, t_nm *nm)
 	unsigned int			i;
 
 	if (nm == NULL || argv == NULL)
-		ERROR_EXIT("FLAG or ARGV == NULL", __FILE__, del_nm, nm);
+		ERROR_VOID("FLAG or ARGV == NULL", __FILE__, del_nm, nm);
 	i = 0;
 	while (argv[i++] != '\0')
 	{
@@ -71,7 +71,7 @@ static void					check_flags(t_nm **nm)
 			(*nm)->flags = (*nm)->flags ^ F_R_MIN;
 	}
 	if (((*nm)->flags & F_O_MIN) != 0 && ((*nm)->flags & F_A_MAJ) != 0)
-		ERROR_EXIT("ft_nm: for the -print-name option!", __FILE__, del_nm, nm);
+		ERROR_VOID("ft_nm: for the -print-name option!", __FILE__, del_nm, nm);
 }
 
 t_nm						*init_flags(char const **argv)

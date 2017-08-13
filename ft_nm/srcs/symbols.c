@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/15 15:13:29 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/20 15:02:19 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/08/06 10:47:05 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void					sort_symbols(t_nm *nm, t_symbol *symbol)
 {
 	if (nm == NULL || symbol == NULL)
-		ERROR_EXIT("Symbol or nm NULL", __FILE__, NULL, NULL);
+		ERROR_VOID("Symbol or nm NULL", __FILE__, NULL, NULL);
 	if ((nm->flags & F_N_MIN) != 0)
 	{
 		ft_qsort(symbol, nm->nb_symbol, sizeof(*symbol), sort_numerically);
@@ -49,7 +49,7 @@ void						gestion_symbols(t_nm **nm, t_symbol **symbol,
 		char const *name_file, void const *ptr)
 {
 	if (nm == NULL || *nm == NULL || symbol == NULL || *symbol == NULL)
-		ERROR_EXIT("Invalid values", __FILE__, del_nm, nm);
+		ERROR_VOID("Invalid values", __FILE__, del_nm, nm);
 	sort_symbols(*nm, *symbol);
 	print_symbols((t_nm const **)nm, *symbol, name_file, ptr);
 	del_symbols(symbol, (*nm)->nb_symbol);
