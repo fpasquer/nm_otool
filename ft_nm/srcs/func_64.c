@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:41:54 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/25 14:11:29 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/09/21 22:32:05 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static t_symbol				*save_output_64(t_nm **nm, struct symtab_command
 		const *sym, void const *ptr)
 {
-	char					*stringtable;
+	char					*str_table;
 	uint32_t				i;
-	struct nlist_64			*array;
+	struct nlist_64			*tab;
 	t_symbol				*ret;
 
 	if (nm == NULL || *nm == NULL || sym == NULL)
@@ -25,20 +25,21 @@ static t_symbol				*save_output_64(t_nm **nm, struct symtab_command
 	if ((ret = (t_symbol *)ft_memalloc(sizeof(*ret) * sym->nsyms)) == NULL)
 		return (NULL);
 	i = 0;
-	if ((void*)(array = (void*)ptr + sym->symoff) + sizeof(*array) * sym->nsyms
+	if ((void*)(tab = (void*)ptr + sym->symoff) + sizeof(*tab) * sym->nsyms
 			> (void*)(*nm)->end)
 		ERROR_EXIT("PTR OVERFLOW 3", __FILE__, NULL, NULL);
-	stringtable = (void*)ptr + sym->stroff;
+	str_table = (void*)ptr + sym->stroff;
 	(*nm)->nb_symbol = sym->nsyms;
-	while(i < sym->nsyms)
+	while(i++ < sym->nsyms)
 	{
-		ret[i].value = array[i].n_value;
-		ret[i].type = array[i].n_type;
-		ret[i].sect = array[i].n_sect;
-		ret[i].desc =array[i].n_desc;
-		if (!(ret[i].name = ft_strdup(stringtable + array[i].n_un.n_strx)))
+		if ((void*)str_table + tab[i - 1].n_un.n_strx > (void*)(*nm)->end)
+			ERROR_EXIT("PTR OVERFLOW 3", __FILE__, NULL, NULL);
+		ret[i - 1].value = tab[i - 1].n_value;
+		ret[i - 1].type = tab[i - 1].n_type;
+		ret[i - 1].sect = tab[i - 1].n_sect;
+		ret[i - 1].desc = tab[i- 1].n_desc;
+		if (!(ret[i - 1].name = ft_strdup(str_table + tab[i - 1].n_un.n_strx)))
 			break ;
-		i++;
 	}
 	return (ret);
 }
