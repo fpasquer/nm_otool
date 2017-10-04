@@ -6,13 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 17:49:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/04 13:33:08 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/04 14:53:29 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_nm.h"
 
-uint32_t					b_to_l_endian(uint32_t num)
+uint32_t					b_to_l(uint32_t num)
 {
 	return (((num >> 24) & 0xff) |
 			((num << 8) & 0xff0000) |
@@ -20,12 +20,22 @@ uint32_t					b_to_l_endian(uint32_t num)
 			((num << 24) & 0xff000000));
 }
 
+static void					cpu_and_cpusub_type_true(t_nm **nm,
+		char const *name_bin, struct fat_arch *arch, void *ptr)
+{
+	t_symbol				*symbol;
+	uint32_t				offset_arch;
+
+	offset_arch = b_to_l(arch->offset);
+	if ((symbol = exe_nm(nm, name_bin, ptr + offset_arch)) != NULL)
+		gestion_symbols(nm, &symbol, name_bin, ptr + offset_arch);
+	reset_struct_nm(nm, ptr + offset_arch);
+}
+
 static t_symbol				*loop_fat(t_nm **nm, const uint32_t end, void *ptr,
 		char const *name_bin)
 {
 	uint32_t				i;
-	uint32_t				offset_arch;
-	t_symbol				*symbol;
 	struct fat_arch			*arch;
 
 	if (nm == NULL || *nm == NULL || ptr == NULL || name_bin == NULL)
@@ -36,14 +46,12 @@ static t_symbol				*loop_fat(t_nm **nm, const uint32_t end, void *ptr,
 		ERROR_EXIT("Ptr arch over the end", __FILE__, del_nm, nm);
 	while (i++ < end)
 	{
-		if (end == 1 || (b_to_l_endian(arch->cputype) == CPU_TYPE &&
-			b_to_l_endian(arch->cpusubtype & CPU_SUBTYPE_MASK) == CPU_SUB_TYPE))
-		{
-			offset_arch = b_to_l_endian(arch->offset);
-			if ((symbol = exe_nm(nm, name_bin, ptr + offset_arch)) != NULL)
-				gestion_symbols(nm, &symbol, name_bin, ptr + offset_arch);
-			reset_struct_nm(nm, ptr + offset_arch);
-		}
+		if ((end == 1 || (b_to_l(arch->cputype) == CPU_TYPE &&
+				b_to_l(arch->cpusubtype & CPU_SUBTYPE_MASK) == CPU_SUB_TYPE)) ||
+				(b_to_l(arch->cputype) == CPU_TYPE_POWERPC &&
+				b_to_l(arch->cpusubtype & CPU_SUBTYPE_MASK) ==
+				CPU_SUBTYPE_POWERPC_ALL))
+			cpu_and_cpusub_type_true(nm, name_bin, arch, ptr);
 		if ((void*)(arch = (void*)arch + sizeof(*arch)) > (void*)(*nm)->end)
 			ERROR_EXIT("Ptr arch over the end 2", __FILE__, del_nm, nm);
 	}
@@ -61,10 +69,10 @@ t_symbol					*func_fat_cigam(t_nm **nm, void *ptr,
 		return (NULL);
 	(*nm)->fat = true;
 	header = (struct fat_header*)ptr;
-	if (b_to_l_endian(header->nfat_arch) == 1)
+	if (b_to_l(header->nfat_arch) == 1)
 	{
 		ft_putstr(name_bin);
 		ft_putstr(":\n");
 	}
-	return (loop_fat(nm, b_to_l_endian(header->nfat_arch), ptr, name_bin));
+	return (loop_fat(nm, b_to_l(header->nfat_arch), ptr, name_bin));
 }

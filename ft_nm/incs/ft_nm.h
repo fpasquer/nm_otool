@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/04 13:37:37 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/04 16:45:28 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <mach/machine.h>
 # include <ar.h>
 # include <mach-o/ranlib.h>
+# include <mach-o/swap.h>
 
 # ifdef __x86_64__
 #  define CPU_TYPE CPU_TYPE_X86_64
@@ -144,11 +145,15 @@ void						print_symbols(t_nm const **nm,
 		t_symbol const *symbol, char const *name_file, void const *ptr);
 char						*get_symbol_64(t_symbol const symbol,
 		void const *ptr);
+char						*get_symbol_64_cigam(t_symbol const symbol,
+		void const *ptr);
 char						*get_symbol_32(t_symbol const symbol,
+		void const *ptr);
+char						*get_symbol_32_cigam(t_symbol const symbol,
 		void const *ptr);
 char						*get_desc(t_symbol const symbol);
 bool						put_error_binaries(char const *path_name);
 bool						reset_struct_nm(t_nm **nm, void *ptr);
-uint32_t					b_to_l_endian(uint32_t num);
+uint32_t					b_to_l(uint32_t num);
 
 #endif
