@@ -6,7 +6,7 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/05/17 16:07:18 by fpasquer          #+#    #+#              #
-#    Updated: 2017/09/29 12:38:13 by fpasquer         ###   ########.fr        #
+#    Updated: 2017/10/04 08:46:08 by fpasquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ OTHERS			= libft Makefile auteur
 OTHER_FLAGS 	=
 
 GCC				= gcc
-CFLAGS			= -Wall -Wextra -Werror -g -std=c89 "-isysroot /Developer/SDKs/MacOSX10.4u.sdk -arch ppc -arch i386"
+CFLAGS			= -Wall -Wextra -Werror -g -std=c89
 
 CFLAGS_32		= -m32
 OBJ_NAME		= $(SRC_NAME:.c=.o)

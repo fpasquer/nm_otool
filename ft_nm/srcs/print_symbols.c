@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 16:07:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/08/06 10:52:43 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/04 09:06:20 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void					print_symbol(t_nm const **nm, t_symbol const symbol,
 		ADD_PRINT_NAME(bin_name);
 	if (((*nm)->flags & F_J_MIN) == 0)
 	{
-		if(ft_utoa_base_tab(symbol.value, 16, buff_value, LEN_64_BIT) == false)
+		if (ft_utoa_base_tab(symbol.value, 16, buff_value, LEN_64_BIT) == false)
 			ERROR_VOID("Invalid symbol value", __FILE__, NULL, NULL);
 		if (symbol.value != 0 || (symbol.type & N_STAB) != 0)
 			place_value(buff_value, (*nm)->magic == MH_MAGIC_64 ? LEN_64_BIT :
@@ -92,7 +92,7 @@ static bool					write_symbol(unsigned int const f,
 		return (false);
 	if ((f & F_G_MIN) != 0 && (s.type & N_EXT) != 0)
 	{
-		if (((s.type & N_TYPE) != N_UNDF && (f & F_U_MIN) == 0) || ( (s.type &
+		if (((s.type & N_TYPE) != N_UNDF && (f & F_U_MIN) == 0) || ((s.type &
 				N_TYPE) == N_UNDF && ((s.value == 0 && (f & F_U_MAJ) == 0) ||
 				(s.value != 0 && ((f & F_U_MAJ) != 0 || (f & F_U_MIN) == 0)))))
 			return ((f & F_U_MIN) != 0 && (f & F_U_MAJ) != 0 ? false : true);

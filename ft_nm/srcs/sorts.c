@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/15 15:20:35 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/08/06 10:47:40 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/04 09:05:18 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,11 @@ int							sort_numerically(void const *a, void const *b)
 	{
 		if ((a_cpy->type & N_STAB) == 0 && (b_cpy->type & N_STAB) == 0)
 		{
-			if ((a_cpy->type & N_TYPE) != N_UNDF && (b_cpy->type & N_TYPE) == N_UNDF)
+			if ((a_cpy->type & N_TYPE) != N_UNDF && (b_cpy->type & N_TYPE)
+					== N_UNDF)
 				return (1);
-			else if ((a_cpy->type & N_TYPE) == N_UNDF && (b_cpy->type & N_TYPE) == N_UNDF)
+			else if ((a_cpy->type & N_TYPE) == N_UNDF && (b_cpy->type & N_TYPE)
+					== N_UNDF)
 				return (0);
 		}
 		else if ((a_cpy->type & N_STAB) != 0 && (b_cpy->type & N_STAB) == 0)

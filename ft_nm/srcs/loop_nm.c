@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 13:23:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/23 13:02:13 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/04 09:04:36 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,5 @@ bool						loop_nm(t_nm *nm, char const *path_name)
 	nm->end = (char*)(ULLI)ptr + (ULLI)nm->buff.st_size;
 	if (ret == true && (symbol = exe_nm(&nm, path_name, ptr)) != NULL)
 		gestion_symbols(&nm, &symbol, path_name, ptr);
-	return(reset_struct_nm(&nm, ptr));
+	return (reset_struct_nm(&nm, ptr));
 }

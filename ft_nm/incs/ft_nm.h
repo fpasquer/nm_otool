@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/22 16:31:11 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/04 09:09:13 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,12 @@ typedef struct				s_symbol
 **	flags		:			options passees en parametre par les argv
 **	buff		:			status du binaires
 */
+
+typedef struct				s_desc
+{
+	uint16_t				key;
+	char					value[100];
+}							t_desc;
 
 typedef struct				s_nm
 {

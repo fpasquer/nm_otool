@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/15 15:13:29 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/08/06 10:47:05 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/04 09:05:50 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void					del_symbols(t_symbol **symbol,
 		uint32_t const nb_symbol)
 {
 	uint32_t				i;
-	t_symbol 				*curs;
+	t_symbol				*curs;
 
 	if (symbol == NULL)
 		return ;

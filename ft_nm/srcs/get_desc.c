@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 13:24:32 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/08/13 13:38:18 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/04 09:04:12 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 
 #define NB_DESC 18
 
-typedef struct				s_desc
-{
-	uint16_t				key;
-	char					value[100];
-}							t_desc;
-
-static t_desc				g_tab_desc[NB_DESC] = 
+static t_desc				g_tab_desc[NB_DESC] =
 {
 	{N_GSYM, "GSYM"},
 	{N_FNAME, "FNAME"},
@@ -50,6 +44,5 @@ char						*get_desc(t_symbol const symbol)
 	while (i++ < NB_DESC)
 		if (symbol.desc == g_tab_desc[i - 1].key)
 			return (g_tab_desc[i - 1].value);
-	/*printf("desc = %03x\n", symbol.desc & REFERENCE_TYPE);*/
 	return ("ERROR");
 }
