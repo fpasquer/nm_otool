@@ -6,15 +6,15 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 21:59:28 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/26 17:39:25 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/04 13:41:05 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-# include <stdio.h>
+#include <stdio.h>
 #define MAX_BASE 16
 
-char				*ft_utoa_base(unsigned long long int nb,
+char						*ft_utoa_base(unsigned long long int nb,
 		const unsigned int base)
 {
 	char						*ret;

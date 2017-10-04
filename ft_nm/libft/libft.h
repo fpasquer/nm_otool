@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 22:00:20 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/08/06 10:45:45 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/04 13:39:57 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,5 @@ bool				init_cache_print(int const fd);
 # define ERROR_EXIT(s, f, fun, ptr) {ft_error(s, f, fun, ptr); return(NULL);}
 # define ERROR_INT(s, f, fun, ptr) {ft_error(s, f, fun, ptr); return(-1);}
 # define ERROR_VOID(s, f, fun, ptr) {ft_error(s, f, fun, ptr); return ;}
-
 
 #endif

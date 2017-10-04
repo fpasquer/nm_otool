@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 17:49:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/04 10:01:50 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/04 13:33:08 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static t_symbol				*loop_fat(t_nm **nm, const uint32_t end, void *ptr,
 		ERROR_EXIT("Ptr arch over the end", __FILE__, del_nm, nm);
 	while (i++ < end)
 	{
-		if (b_to_l_endian(arch->cputype) == CPU_TYPE &&
-			b_to_l_endian(arch->cpusubtype & CPU_SUBTYPE_MASK) == CPU_SUB_TYPE)
+		if (end == 1 || (b_to_l_endian(arch->cputype) == CPU_TYPE &&
+			b_to_l_endian(arch->cpusubtype & CPU_SUBTYPE_MASK) == CPU_SUB_TYPE))
 		{
 			offset_arch = b_to_l_endian(arch->offset);
 			if ((symbol = exe_nm(nm, name_bin, ptr + offset_arch)) != NULL)
@@ -61,5 +61,10 @@ t_symbol					*func_fat_cigam(t_nm **nm, void *ptr,
 		return (NULL);
 	(*nm)->fat = true;
 	header = (struct fat_header*)ptr;
+	if (b_to_l_endian(header->nfat_arch) == 1)
+	{
+		ft_putstr(name_bin);
+		ft_putstr(":\n");
+	}
 	return (loop_fat(nm, b_to_l_endian(header->nfat_arch), ptr, name_bin));
 }

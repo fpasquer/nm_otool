@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/04 09:09:13 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/04 13:37:37 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@
 # include <ar.h>
 # include <mach-o/ranlib.h>
 
-#ifdef __x86_64__
-	# define CPU_TYPE CPU_TYPE_X86_64
-	# define CPU_SUB_TYPE CPU_SUBTYPE_X86_ALL
-#endif
-#ifdef __i386__
-	# define CPU_TYPE CPU_TYPE_I386
-	# define CPU_SUB_TYPE CPU_SUBTYPE_X86_64_ALL
-#endif
+# ifdef __x86_64__
+#  define CPU_TYPE CPU_TYPE_X86_64
+#  define CPU_SUB_TYPE CPU_SUBTYPE_X86_ALL
+# endif
+# ifdef __i386__
+#  define CPU_TYPE CPU_TYPE_I386
+#  define CPU_SUB_TYPE CPU_SUBTYPE_X86_64_ALL
+# endif
 
 /*
 ** -j -n -u -p -U -r -A -g -o
@@ -115,16 +115,24 @@ t_symbol					*exe_nm(t_nm **nm, char const *name_bin, void *ptr);
 void						gestion_symbols(t_nm **nm, t_symbol **symbol,
 		char const *name_file, void const *ptr);
 
-t_symbol					*func_32(t_nm **nm, void *ptr, char const *name_bin);
-t_symbol					*func_32_cigam(t_nm **nm, void *ptr, char const *name_bin);
-t_symbol					*func_64(t_nm **nm, void *ptr, char const *name_bin);
-t_symbol					*func_64_cigam(t_nm **nm, void *ptr, char const *name_bin);
-t_symbol					*error_magic_number(t_nm **nm, void *ptr, char const *name_bin);
-t_symbol					*func_fat_magic(t_nm **nm, void *ptr, char const *name_bin);
-t_symbol					*func_fat_cigam(t_nm **nm, void *ptr, char const *name_bin);
-t_symbol					*func_armag_magic(t_nm **nm, void *ptr,char const *name_bin);
+t_symbol					*func_32(t_nm **nm, void *ptr,
+		char const *name_bin);
+t_symbol					*func_32_cigam(t_nm **nm, void *ptr,
+		char const *name_bin);
+t_symbol					*func_64(t_nm **nm, void *ptr,
+		char const *name_bin);
+t_symbol					*func_64_cigam(t_nm **nm, void *ptr,
+		char const *name_bin);
+t_symbol					*error_magic_number(t_nm **nm, void *ptr,
+		char const *name_bin);
+t_symbol					*func_fat_magic(t_nm **nm, void *ptr,
+		char const *name_bin);
+t_symbol					*func_fat_cigam(t_nm **nm, void *ptr,
+		char const *name_bin);
+t_symbol					*func_armag_magic(t_nm **nm, void *ptr,
+		char const *name_bin);
 
-int							sort_ascii(const void *, const void *);
+int							sort_ascii(void const *a, void const *b);
 int							sort_numerically(void const *a, void const *b);
 int							sort_lib_desc(void const *a, void const *b);
 void						sort_type_ascii(t_symbol *symbol, uint32_t type,
