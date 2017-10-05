@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/04 16:45:28 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/05 13:08:31 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,12 @@ typedef struct				s_nm
 }							t_nm;
 
 # define NB_FUNC 6
+
+typedef struct				s_cpu_type_str
+{
+	uint32_t				key;
+	char					*str;
+}							t_cpu_type_str;
 
 typedef struct				s_func_nm
 {

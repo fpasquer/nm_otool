@@ -6,11 +6,33 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 17:49:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/04 14:53:29 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/05 14:08:27 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_nm.h"
+
+#define NAME {add_cache_print(g_cpu_str[j - 1].str); break ;}
+
+t_cpu_type_str				g_cpu_str[] =
+{
+	{CPU_TYPE_ANY, " (for architecture ) 1:\n"},
+	{CPU_TYPE_VAX, " (for architecture ) 2:\n"},
+	{CPU_TYPE_MC680x0, " (for architecture ) 3:\n"},
+	{CPU_TYPE_X86, " (for architecture i386):\n"},
+	{CPU_TYPE_I386, " (for architecture ) 5:\n"},
+	{CPU_TYPE_X86_64, " (for architecture x86_64):\n"},
+	{CPU_TYPE_MC98000, " (for architecture ) 6:\n"},
+	{CPU_TYPE_HPPA, " (for architecture ) 7:\n"},
+	{CPU_TYPE_ARM, " (for architecture ) 8:\n"},
+	{CPU_TYPE_ARM64, " (for architecture ) 9:\n"},
+	{CPU_TYPE_MC88000, " (for architecture ) 10:\n"},
+	{CPU_TYPE_SPARC, " (for architecture ) 11:\n"},
+	{CPU_TYPE_I860, " (for architecture ) 12:\n"},
+	{CPU_TYPE_POWERPC, " (for architecture ppc):\n"},
+	{CPU_TYPE_POWERPC64, " (for architecture pp64) :\n"},
+	{0, ""}
+};
 
 uint32_t					b_to_l(uint32_t num)
 {
@@ -21,41 +43,68 @@ uint32_t					b_to_l(uint32_t num)
 }
 
 static void					cpu_and_cpusub_type_true(t_nm **nm,
-		char const *name_bin, struct fat_arch *arch, void *ptr)
+		char const *name_bin, uint32_t offset_arch, void *ptr)
 {
 	t_symbol				*symbol;
-	uint32_t				offset_arch;
 
-	offset_arch = b_to_l(arch->offset);
 	if ((symbol = exe_nm(nm, name_bin, ptr + offset_arch)) != NULL)
 		gestion_symbols(nm, &symbol, name_bin, ptr + offset_arch);
-	reset_struct_nm(nm, ptr + offset_arch);
 }
 
-static t_symbol				*loop_fat(t_nm **nm, const uint32_t end, void *ptr,
+static int					loop_fat(t_nm **nm, const uint32_t end, void *ptr,
 		char const *name_bin)
 {
 	uint32_t				i;
 	struct fat_arch			*arch;
 
 	if (nm == NULL || *nm == NULL || ptr == NULL || name_bin == NULL)
-		ERROR_EXIT("NM = NULL 2", __FILE__, NULL, NULL);
+		ERROR_INT("NM = NULL 2", __FILE__, NULL, NULL);
 	i = 0;
 	if ((void*)(arch = (void*)ptr + sizeof(struct fat_header*)) >
 			(void*)(*nm)->end)
-		ERROR_EXIT("Ptr arch over the end", __FILE__, del_nm, nm);
+		ERROR_INT("Ptr arch over the end", __FILE__, del_nm, nm);
 	while (i++ < end)
 	{
-		if ((end == 1 || (b_to_l(arch->cputype) == CPU_TYPE &&
-				b_to_l(arch->cpusubtype & CPU_SUBTYPE_MASK) == CPU_SUB_TYPE)) ||
-				(b_to_l(arch->cputype) == CPU_TYPE_POWERPC &&
-				b_to_l(arch->cpusubtype & CPU_SUBTYPE_MASK) ==
-				CPU_SUBTYPE_POWERPC_ALL))
-			cpu_and_cpusub_type_true(nm, name_bin, arch, ptr);
+		if ((b_to_l(arch->cputype) == CPU_TYPE &&
+				b_to_l(arch->cpusubtype & CPU_SUBTYPE_MASK) == CPU_SUB_TYPE))
+		{
+			cpu_and_cpusub_type_true(nm, name_bin, b_to_l(arch->offset), ptr);
+			reset_struct_nm(nm, ptr + b_to_l(arch->offset));
+			return (true);
+		}
 		if ((void*)(arch = (void*)arch + sizeof(*arch)) > (void*)(*nm)->end)
-			ERROR_EXIT("Ptr arch over the end 2", __FILE__, del_nm, nm);
+			ERROR_INT("Ptr arch over the end 2", __FILE__, del_nm, nm);
 	}
-	return (NULL);
+	return (false);
+}
+
+static void					loop_fat2(t_nm **nm, const uint32_t end, void *ptr,
+	char const *name_bin)
+{
+	int						j;
+	uint32_t				i;
+	struct fat_arch			*arch;
+
+	if (nm == NULL || *nm == NULL || ptr == NULL || name_bin == NULL)
+		ERROR_VOID("NM = NULL 2", __FILE__, NULL, NULL);
+	i = 0;
+	if ((void*)(arch = ptr + sizeof(struct fat_header*)) > (void*)(*nm)->end)
+		ERROR_VOID("Ptr arch over the end", __FILE__, del_nm, nm);
+	while (i++ < end && (j = 0) == 0)
+	{
+		if (end > 1)
+			add_cache_print("\n");
+		add_cache_print(name_bin);
+		if (end == 1)
+			add_cache_print(":\n");
+		while (end > 1 && g_cpu_str[j].key != 0)
+			if (g_cpu_str[j++].key == b_to_l(arch->cputype))
+				NAME;
+		cpu_and_cpusub_type_true(nm, name_bin, b_to_l(arch->offset), ptr);
+		if ((void*)(arch = (void*)arch + sizeof(*arch)) > (void*)(*nm)->end)
+			ERROR_VOID("Ptr arch over the end 2", __FILE__, del_nm, nm);
+	}
+	reset_struct_nm(nm, ptr + b_to_l(arch->offset));
 }
 
 t_symbol					*func_fat_cigam(t_nm **nm, void *ptr,
@@ -69,10 +118,10 @@ t_symbol					*func_fat_cigam(t_nm **nm, void *ptr,
 		return (NULL);
 	(*nm)->fat = true;
 	header = (struct fat_header*)ptr;
-	if (b_to_l(header->nfat_arch) == 1)
+	if (loop_fat(nm, b_to_l(header->nfat_arch), ptr, name_bin) == false)
 	{
-		ft_putstr(name_bin);
-		ft_putstr(":\n");
+		(*nm)->fat = false;
+		loop_fat2(nm, b_to_l(header->nfat_arch), ptr, name_bin);
 	}
-	return (loop_fat(nm, b_to_l(header->nfat_arch), ptr, name_bin));
+	return (NULL);
 }
