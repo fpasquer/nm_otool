@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:13:43 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/25 16:18:23 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/05 15:41:16 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void						*exe_otool(t_otool *otool, char const *name,
 	uint32_t				magic_number;
 
 	if (name == NULL || ptr == NULL)
-		return((void*)put_error_file("name == NULL"));
+		return ((void*)put_error_file("name == NULL"));
 	if ((void*)(ptr + sizeof(magic_number)) >= (void*)otool->end)
-		return((void*)put_error_file("Over the end hjxgv cjzhgvx xj"));
+		return ((void*)put_error_file("Over the end hjxgv cjzhgvx xj"));
 	magic_number = *(uint32_t*)ptr;
 	i = 0;
 	while (i < NB_FUNC)

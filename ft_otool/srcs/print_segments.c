@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/25 10:18:11 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/26 15:20:15 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/05 15:37:01 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ static void					place_value(char *buff, size_t max)
 		buff[max] = '0';
 }
 
-void						print_value(uint64_t const addr, size_t len, uint64_t length)
+void						print_value(uint64_t const addr, size_t len,
+		uint64_t length)
 {
-	char					tab[LEN_64_BIT + 1];	
-	
+	char					tab[LEN_64_BIT + 1];
+
 	if (length <= 0)
 		return ;
 	ft_bzero(tab, sizeof(char) * (LEN_64_BIT + 1));

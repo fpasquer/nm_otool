@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/18 09:38:58 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/18 11:22:08 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/05 15:23:32 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool						add_cache_print(char const *str)
 	i = 0;
 	ret = true;
 	while (i < len && g_i < SIZE_CACHE)
-		g_cache[g_i++] = str[i++]; 
+		g_cache[g_i++] = str[i++];
 	if (i < len)
 	{
 		if (print_cache() == false)

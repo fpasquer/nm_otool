@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:50:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/26 15:14:13 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/05 15:25:51 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,25 @@ static void					increment_var(uint32_t *offset, uint32_t *value,
 }
 
 static void					*get_segment_64(t_otool *otool, char const *name,
-		struct segment_command_64 *secCmd, void const *ptr)
+		struct segment_command_64 *sec_cmd, void const *ptr)
 {
 	uint32_t				offset;
 	uint32_t				value;
 	uint64_t				size;
 	struct section_64		*sec;
 
-	if (otool == NULL || secCmd == NULL || ptr == NULL || name == NULL)
+	if (otool == NULL || sec_cmd == NULL || ptr == NULL || name == NULL)
 		return ((void*)put_error_file("Otool NULL asjda sjdkh ahjsd"));
-	if ((void*)(sec = (void*)secCmd + sizeof(*secCmd)) + sizeof(*sec) >=
+	if ((void*)(sec = (void*)sec_cmd + sizeof(*sec_cmd)) + sizeof(*sec) >=
 			(void*)otool->end)
 		return ((void*)put_error_file("Over the end dqwid qjwd gjqwg"));
 	print_header(name, sec->segname, sec->sectname);
 	size = sec->size;
 	offset = sec->offset;
-	value = ft_strcmp(secCmd->segname, "") != 0? sec->offset : 0;
+	value = ft_strcmp(sec_cmd->segname, "") != 0 ? sec->offset : 0;
 	while (1)
 	{
-		print_value(value + secCmd->vmaddr, LEN_64_BIT, size);
+		print_value(value + sec_cmd->vmaddr, LEN_64_BIT, size);
 		if ((void*)(ptr + offset + NB_EACH_LINE) > otool->end)
 			return ((void*)put_error_file("Over the end asdasdsasdadsadassa"));
 		print_line(size, ptr + offset);

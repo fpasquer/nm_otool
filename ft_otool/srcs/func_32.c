@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:45:09 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/26 15:13:33 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/05 15:31:59 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,25 @@ static void					increment_var(uint32_t *offset, uint32_t *value,
 }
 
 static void					*get_segment_32(t_otool *otool, char const *name,
-		struct segment_command *secCmd, void const *ptr)
+		struct segment_command *sec_cmd, void const *ptr)
 {
 	uint32_t				offset;
 	uint32_t				value;
 	uint64_t				size;
-	struct section		*sec;
+	struct section			*sec;
 
-	if (otool == NULL || secCmd == NULL || ptr == NULL || name == NULL)
+	if (otool == NULL || sec_cmd == NULL || ptr == NULL || name == NULL)
 		return ((void*)put_error_file("Otool NULL asjda sjdkh ahjsd"));
-	if ((void*)(sec = (void*)secCmd + sizeof(*secCmd)) + sizeof(*sec) >=
+	if ((void*)(sec = (void*)sec_cmd + sizeof(*sec_cmd)) + sizeof(*sec) >=
 			(void*)otool->end)
 		return ((void*)put_error_file("Over the end dqwid qjwd gjqwg"));
 	print_header(name, sec->segname, sec->sectname);
 	size = sec->size;
 	offset = sec->offset;
-	value = ft_strcmp(secCmd->segname, "") != 0 ? sec->offset : 0;
+	value = ft_strcmp(sec_cmd->segname, "") != 0 ? sec->offset : 0;
 	while (1)
 	{
-		print_value(value + secCmd->vmaddr, LEN_32_BIT, size);
+		print_value(value + sec_cmd->vmaddr, LEN_32_BIT, size);
 		if ((void*)(ptr + offset + NB_EACH_LINE) > otool->end)
 			return ((void*)put_error_file("Over the end dsafsdasdfdassa"));
 		print_line(size, ptr + offset);
@@ -60,7 +60,7 @@ void						*func_32(t_otool *otool, char const *name,
 {
 	uint32_t				seg;
 	uint32_t				i;
-	struct mach_header	*head;
+	struct mach_header		*head;
 	struct load_command		*lc;
 
 	if (otool == NULL || name == NULL || ptr == NULL || (i = 0))

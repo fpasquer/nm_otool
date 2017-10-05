@@ -35,14 +35,14 @@
 # define LEN_32_BIT 8u
 # define NB_EACH_LINE 16u
 
-#ifdef __x86_64__
-	# define CPU_TYPE CPU_TYPE_X86_64
-	# define CPU_SUB_TYPE CPU_SUBTYPE_X86_ALL
-#endif
-#ifdef __i386__
-	# define CPU_TYPE CPU_TYPE_I386
-	# define CPU_SUB_TYPE CPU_SUBTYPE_X86_64_ALL
-#endif
+# ifdef __x86_64__
+#  define CPU_TYPE CPU_TYPE_X86_64
+#  define CPU_SUB_TYPE CPU_SUBTYPE_X86_ALL
+# endif
+# ifdef __i386__
+#  define CPU_TYPE CPU_TYPE_I386
+#  define CPU_SUB_TYPE CPU_SUBTYPE_X86_64_ALL
+# endif
 
 typedef struct				s_otool
 {

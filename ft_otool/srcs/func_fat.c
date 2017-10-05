@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:50:46 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/26 14:54:59 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/05 15:40:38 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void						*func_fat(t_otool *otool, char const *name,
 	{
 		if (CPU_TYPE == (B_TO_L(otool->cigam, arch->cputype)))
 			if ((void*)(ptr + B_TO_L(otool->cigam, arch->offset)) < otool->end)
-				return exe_otool(otool, name, ptr + (B_TO_L(otool->cigam,
-						arch->offset)));
-		arch = (void*)arch + sizeof(*arch);
+				return (exe_otool(otool, name, ptr + (B_TO_L(otool->cigam,
+						arch->offset))));
+				arch = (void*)arch + sizeof(*arch);
 	}
 	return (NULL);
 }
