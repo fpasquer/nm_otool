@@ -70,7 +70,8 @@ void						*exe_otool(t_otool *otool, char const *name,
 		void const *ptr);
 void						print_header(char const *name, char const *segname,
 		char const *sectname);
-void						print_value(uint64_t const addr, size_t len, uint64_t length);
+void						print_value(uint64_t const addr, size_t len,
+		uint64_t length);
 void						print_line(uint64_t length, void const *ptr);
 
 uint32_t					b_to_l_endian(uint32_t num);
@@ -80,6 +81,10 @@ void						*func_32(t_otool *otool, char const *name,
 void						*func_64(t_otool *otool, char const *name,
 		void const *ptr);
 void						*func_fat(t_otool *otool, char const *name,
+		void const *ptr);
+void						*func_32_cigam(t_otool *otool, char const *name,
+		void const *ptr);
+void						*func_64_cigam(t_otool *otool, char const *name,
 		void const *ptr);
 
 #endif
