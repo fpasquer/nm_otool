@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:40:59 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/04 17:58:46 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/05 09:54:13 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,26 +49,30 @@ static t_symbol				*loop_func_32_cigam(t_nm **nm,
 		void const *ptr)
 {
 	uint32_t				i;
+	t_symbol				*ret;
 	struct load_command		*lc_next;
 
-	if (nm == NULL || *nm == NULL || header == NULL || lc == NULL || ptr == NULL)
+	if (nm == NULL || *nm == NULL || header == NULL || lc == NULL)
 		ERROR_EXIT("Invalid arguments", __FILE__, NULL, NULL);
 	i = 0;
+	ret = NULL;
 	while (i++ < header->ncmds)
 	{
 		swap_load_command(lc, NX_UnknownByteOrder);
 		if (lc->cmd == LC_SYMTAB)
 		{
 			swap_load_command(lc = (void*)lc, NX_UnknownByteOrder);
-			return (save_output_32_cigam(nm, (struct symtab_command *)lc, ptr));
+			ret = save_output_32_cigam(nm, (struct symtab_command *)lc, ptr);
+			break ;
 		}
 		if ((void*)(lc_next = (void *)lc + lc->cmdsize) > (void*)(*nm)->end)
 			ERROR_EXIT("Ptr lc over the end 2", __FILE__, del_nm, nm);
-		swap_load_command(lc = (void*)lc, NX_UnknownByteOrder);
-		lc = lc_next;
+		swap_load_command(lc, NX_UnknownByteOrder);
+		if ((void*)(lc = lc_next) > (void*)(*nm)->end)
+			break ;
 	}
-	swap_mach_header(header = (struct mach_header*)ptr, NX_UnknownByteOrder);
-	return (NULL);
+	swap_mach_header(header, NX_UnknownByteOrder);
+	return (ret);
 }
 
 t_symbol					*func_32_cigam(t_nm **nm, void *ptr,
@@ -93,29 +97,33 @@ t_symbol					*func_32_cigam(t_nm **nm, void *ptr,
 static char					*get_symbol_32_2_cigam(struct segment_command *seg_cmd,
 		struct section *sec, t_symbol const symbol, uint8_t *j)
 {
+	char					mem[16];
 	uint32_t				i;
+	struct section			*start;
 
 	i = 0;
-	printf("ncmd %d\n", seg_cmd->nsects);
-	swap_segment_command(seg_cmd, 0);
-	printf("ncmd %d\n", seg_cmd->nsects);
+	swap_segment_command(seg_cmd, NX_UnknownByteOrder);
+	start = sec;
+	swap_section(sec, seg_cmd->nsects, NX_UnknownByteOrder);
 	while (i++ < seg_cmd->nsects)
 	{
-		swap_section(sec, seg_cmd->nsects, NX_UnknownByteOrder);
 		if (++(*j) == symbol.sect)
 		{
-
-			if (ft_strcmp(sec->sectname, SECT_DATA) == 0)
+			ft_strcpy(mem, sec->sectname);
+			swap_section(start, seg_cmd->nsects, NX_UnknownByteOrder);
+			swap_segment_command(seg_cmd, NX_UnknownByteOrder);
+			if (ft_strcmp(mem, SECT_DATA) == 0)
 				return ((symbol.type & N_EXT) == 0 ? "d" : "D");
-			else if (ft_strcmp(sec->sectname, SECT_BSS) == 0)
+			else if (ft_strcmp(mem, SECT_BSS) == 0)
 				return ((symbol.type & N_EXT) == 0 ? "b" : "B");
-			else if (ft_strcmp(sec->sectname, SECT_TEXT) == 0)
+			else if (ft_strcmp(mem, SECT_TEXT) == 0)
 				return ((symbol.type & N_EXT) == 0 ? "t" : "T");
 			return ((symbol.type & N_EXT) == 0 ? "s" : "S");
 		}
 		sec = (struct section *)((char *)sec + sizeof(struct section));
 	}
-	swap_segment_command(seg_cmd, 0);
+	swap_section(start, seg_cmd->nsects, NX_UnknownByteOrder);
+	swap_segment_command(seg_cmd, NX_UnknownByteOrder);
 	return ("");
 }
 
@@ -125,23 +133,30 @@ char						*get_symbol_32_cigam(t_symbol const symbol,
 	char					*ret;
 	uint32_t				i;
 	struct mach_header		*header;
-	struct load_command		*lc;
+	struct load_command		*lc, *lc_next;
 	uint8_t					j;
 
-	swap_mach_header(header = (struct mach_header*)ptr, 0);
-	swap_load_command(lc = (void*)ptr + sizeof(*header), 0);
+	swap_mach_header(header = (struct mach_header*)ptr, NX_UnknownByteOrder);
+	lc = (void*)ptr + sizeof(*header);
 	i = 0;
 	j = 0;
+	ret = NULL;
 	while (i++ < header->ncmds)
 	{
+		swap_load_command(lc, NX_UnknownByteOrder);
 		if (lc->cmd == LC_SEGMENT)
 		{
+			swap_load_command(lc, NX_UnknownByteOrder);
 			ret = get_symbol_32_2_cigam((void *)lc, (void *)lc + sizeof(
 					struct segment_command), symbol, &j);
 			if (ft_strlen(ret) > 0)
-				return (ret);
+				break ;
+			swap_load_command(lc, NX_UnknownByteOrder);
 		}
-		swap_load_command(lc = (void *)lc + lc->cmdsize, 0);
+		lc_next = (void *)lc + lc->cmdsize;
+		swap_load_command(lc, NX_UnknownByteOrder);
+		lc = lc_next;
 	}
-	return ("ERROR");
+	swap_mach_header(header, NX_UnknownByteOrder);
+	return (ret);
 }
