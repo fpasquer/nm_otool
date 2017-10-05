@@ -6,14 +6,22 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:40:59 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/05 09:54:13 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/05 10:26:50 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_nm.h"
 
-static t_symbol				*save_output_32_cigam(t_nm **nm, struct symtab_command
-		*sym, void const *ptr)
+#define I2 i = 0; j = 0; ret = NULL;
+#define I lc[0] = (void*)ptr + sizeof(*header); I2
+#define R2 swap_segment_command(seg_cmd, 0);
+#define R swap_section(start, seg_cmd->nsects, 0); R2
+#define END if (ft_strlen(ret) > 0)break ;
+#define INIT2 (*nm)->nb_symbol = sym->nsyms;
+#define INIT i = 0; str_table = (void*)ptr + sym->stroff; INIT2
+
+static t_symbol				*save_output_32_cigam(t_nm **nm,
+		struct symtab_command *sym, void const *ptr)
 {
 	char					*str_table;
 	uint32_t				i;
@@ -25,10 +33,8 @@ static t_symbol				*save_output_32_cigam(t_nm **nm, struct symtab_command
 	swap_symtab_command(sym, NX_UnknownByteOrder);
 	if ((ret = (t_symbol *)ft_memalloc(sizeof(*ret) * sym->nsyms)) == NULL)
 		return (NULL);
-	i = 0;
 	swap_nlist(tab = (void*)ptr + sym->symoff, sym->nsyms, NX_UnknownByteOrder);
-	str_table = (void*)ptr + sym->stroff;
-	(*nm)->nb_symbol = sym->nsyms;
+	INIT;
 	while (i++ < sym->nsyms)
 	{
 		if ((void*)str_table + tab[i - 1].n_un.n_strx > (void*)(*nm)->end)
@@ -94,8 +100,9 @@ t_symbol					*func_32_cigam(t_nm **nm, void *ptr,
 	return (loop_func_32_cigam(nm, header, lc, ptr));
 }
 
-static char					*get_symbol_32_2_cigam(struct segment_command *seg_cmd,
-		struct section *sec, t_symbol const symbol, uint8_t *j)
+static char					*get_symbol_32_2_cigam(
+		struct segment_command *seg_cmd, struct section *sec,
+		t_symbol const symbol, uint8_t *j)
 {
 	char					mem[16];
 	uint32_t				i;
@@ -103,15 +110,13 @@ static char					*get_symbol_32_2_cigam(struct segment_command *seg_cmd,
 
 	i = 0;
 	swap_segment_command(seg_cmd, NX_UnknownByteOrder);
-	start = sec;
-	swap_section(sec, seg_cmd->nsects, NX_UnknownByteOrder);
-	while (i++ < seg_cmd->nsects)
+	swap_section(start = sec, seg_cmd->nsects, NX_UnknownByteOrder);
+	while (seg_cmd->nsects > 0 && i++ < seg_cmd->nsects)
 	{
 		if (++(*j) == symbol.sect)
 		{
 			ft_strcpy(mem, sec->sectname);
-			swap_section(start, seg_cmd->nsects, NX_UnknownByteOrder);
-			swap_segment_command(seg_cmd, NX_UnknownByteOrder);
+			R;
 			if (ft_strcmp(mem, SECT_DATA) == 0)
 				return ((symbol.type & N_EXT) == 0 ? "d" : "D");
 			else if (ft_strcmp(mem, SECT_BSS) == 0)
@@ -122,10 +127,14 @@ static char					*get_symbol_32_2_cigam(struct segment_command *seg_cmd,
 		}
 		sec = (struct section *)((char *)sec + sizeof(struct section));
 	}
-	swap_section(start, seg_cmd->nsects, NX_UnknownByteOrder);
-	swap_segment_command(seg_cmd, NX_UnknownByteOrder);
+	R;
 	return ("");
 }
+
+/*
+** lc[0] = lc
+** lc[1] = lc_next
+*/
 
 char						*get_symbol_32_cigam(t_symbol const symbol,
 		void const *ptr)
@@ -133,29 +142,25 @@ char						*get_symbol_32_cigam(t_symbol const symbol,
 	char					*ret;
 	uint32_t				i;
 	struct mach_header		*header;
-	struct load_command		*lc, *lc_next;
+	struct load_command		*lc[2];
 	uint8_t					j;
 
 	swap_mach_header(header = (struct mach_header*)ptr, NX_UnknownByteOrder);
-	lc = (void*)ptr + sizeof(*header);
-	i = 0;
-	j = 0;
-	ret = NULL;
+	I;
 	while (i++ < header->ncmds)
 	{
-		swap_load_command(lc, NX_UnknownByteOrder);
-		if (lc->cmd == LC_SEGMENT)
+		swap_load_command(lc[0], NX_UnknownByteOrder);
+		if (lc[0]->cmd == LC_SEGMENT)
 		{
-			swap_load_command(lc, NX_UnknownByteOrder);
-			ret = get_symbol_32_2_cigam((void *)lc, (void *)lc + sizeof(
+			swap_load_command(lc[0], NX_UnknownByteOrder);
+			ret = get_symbol_32_2_cigam((void *)lc[0], (void *)lc[0] + sizeof(
 					struct segment_command), symbol, &j);
-			if (ft_strlen(ret) > 0)
-				break ;
-			swap_load_command(lc, NX_UnknownByteOrder);
+			END;
+			swap_load_command(lc[0], NX_UnknownByteOrder);
 		}
-		lc_next = (void *)lc + lc->cmdsize;
-		swap_load_command(lc, NX_UnknownByteOrder);
-		lc = lc_next;
+		lc[1] = (void *)lc[0] + lc[0]->cmdsize;
+		swap_load_command(lc[0], NX_UnknownByteOrder);
+		lc[0] = lc[1];
 	}
 	swap_mach_header(header, NX_UnknownByteOrder);
 	return (ret);

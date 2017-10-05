@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 16:07:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/04 16:57:43 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/05 10:29:54 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #define ADD_PRINT_SPACE(s) add_cache_print(s); add_cache_print(" ");
 #define ADD_PRINT_NAME(s) { add_cache_print(s); add_cache_print(": ");}
+#define CIGAM (*nm)->magic == MH_CIGAM_64 || (*nm)->magic == MH_CIGAM
+#define MAGIC (*nm)->magic == MH_MAGIC_64 || (*nm)->magic == MH_MAGIC
 
 static char					*get_type(t_nm const **nm, t_symbol const symbol,
 		void const *ptr)
@@ -30,10 +32,10 @@ static char					*get_type(t_nm const **nm, t_symbol const symbol,
 	}
 	else if (type == N_ABS)
 		return (ext == 0 ? "a" : "A");
-	else if (type == N_SECT && ((*nm)->magic == MH_CIGAM_64 || (*nm)->magic == MH_CIGAM))
+	else if (type == N_SECT && (CIGAM))
 		return ((*nm)->magic == MH_CIGAM_64 ? get_symbol_64(symbol,
 					ptr) : get_symbol_32_cigam(symbol, ptr));
-	else if (type == N_SECT && ((*nm)->magic == MH_MAGIC_64 || (*nm)->magic == MH_MAGIC))
+	else if (type == N_SECT && (MAGIC))
 		return ((*nm)->magic == MH_MAGIC_64 ? get_symbol_64(symbol, ptr) :
 				get_symbol_32(symbol, ptr));
 	else if (type == N_PBUD)

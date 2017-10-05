@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:38:13 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/04 17:58:22 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/05 10:04:03 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static char					*get_symbol_32_2(struct segment_command *seg_cmd,
 	uint32_t				i;
 
 	i = 0;
-	printf("ncmd %d\n", seg_cmd->nsects);
 	if (seg_cmd->nsects <= 0)
 		return ("");
 	while (i++ < seg_cmd->nsects)
