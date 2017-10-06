@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:50:05 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/05 15:25:51 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/06 10:48:47 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void					*get_segment_64(t_otool *otool, char const *name,
 	if ((void*)(sec = (void*)sec_cmd + sizeof(*sec_cmd)) + sizeof(*sec) >=
 			(void*)otool->end)
 		return ((void*)put_error_file("Over the end dqwid qjwd gjqwg"));
-	print_header(name, sec->segname, sec->sectname);
+	print_header(name, sec->segname, sec->sectname, otool);
 	size = sec->size;
 	offset = sec->offset;
 	value = ft_strcmp(sec_cmd->segname, "") != 0 ? sec->offset : 0;
@@ -47,7 +47,7 @@ static void					*get_segment_64(t_otool *otool, char const *name,
 		print_value(value + sec_cmd->vmaddr, LEN_64_BIT, size);
 		if ((void*)(ptr + offset + NB_EACH_LINE) > otool->end)
 			return ((void*)put_error_file("Over the end asdasdsasdadsadassa"));
-		print_line(size, ptr + offset);
+		print_line(size, ptr + offset, otool);
 		if (size <= NB_EACH_LINE)
 			break ;
 		increment_var(&offset, &value, &size);

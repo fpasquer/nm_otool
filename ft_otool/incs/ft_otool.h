@@ -44,6 +44,14 @@
 #  define CPU_SUB_TYPE CPU_SUBTYPE_X86_64_ALL
 # endif
 
+#define B_TO_L(m, v) ((m) ? b_to_l_endian(v) : v)
+
+typedef struct				s_cpu_type_str
+{
+	uint32_t				key;
+	char					*str;
+}							t_cpu_type_str;
+
 typedef struct				s_otool
 {
 	void					*ptr;
@@ -52,6 +60,9 @@ typedef struct				s_otool
 	bool					bits64;
 	char					*path_name;
 	int						fd;
+	bool					fat;
+	bool					not_foond;
+	uint32_t				cpu_type;
 	struct stat				stat;
 }							t_otool;
 
@@ -69,10 +80,11 @@ bool						put_error_file(char const *str);
 void						*exe_otool(t_otool *otool, char const *name,
 		void const *ptr);
 void						print_header(char const *name, char const *segname,
-		char const *sectname);
+		char const *sectname, t_otool *otool);
 void						print_value(uint64_t const addr, size_t len,
 		uint64_t length);
-void						print_line(uint64_t length, void const *ptr);
+void						print_line(uint64_t length, void const *ptr,
+		t_otool *otool);
 
 uint32_t					b_to_l_endian(uint32_t num);
 

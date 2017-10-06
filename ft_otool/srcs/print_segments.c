@@ -6,18 +6,47 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/25 10:18:11 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/05 15:37:01 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/06 10:52:04 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_otool.h"
 
-void						print_header(char const *name, char const *segname,
-		char const *sectname)
+t_cpu_type_str				g_cpu_str[] =
 {
-	if (name == NULL || segname == NULL || sectname == NULL)
+	{CPU_TYPE_ANY, " (architecture ) 1"},
+	{CPU_TYPE_VAX, " (architecture ) 2"},
+	{CPU_TYPE_MC680x0, " (architecture ) 3"},
+	{CPU_TYPE_X86, " (architecture i386)"},
+	{CPU_TYPE_I386, " (architecture ) 5"},
+	{CPU_TYPE_X86_64, " (architecture x86_64)"},
+	{CPU_TYPE_MC98000, " (architecture ) 6"},
+	{CPU_TYPE_HPPA, " (architecture ) 7"},
+	{CPU_TYPE_ARM, " (architecture ) 8"},
+	{CPU_TYPE_ARM64, " (architecture ) 9"},
+	{CPU_TYPE_MC88000, " (architecture ) 10"},
+	{CPU_TYPE_SPARC, " (architecture ) 11"},
+	{CPU_TYPE_I860, " (architecture ) 12"},
+	{CPU_TYPE_POWERPC, " (architecture ppc)"},
+	{CPU_TYPE_POWERPC64, " (architecture pp64)"},
+	{0, ""}
+};
+
+void						print_header(char const *name, char const *segname,
+		char const *sectname, t_otool *otool)
+{
+	int						i;
+
+	if (name == NULL || segname == NULL || sectname == NULL || otool == NULL)
 		return ;
 	add_cache_print(name);
+	i = 0;
+	while (g_cpu_str[i].key != 0)
+		if (g_cpu_str[i++].key == otool->cpu_type)
+		{
+			add_cache_print(g_cpu_str[i - 1].str);
+			break ;
+		}
 	add_cache_print(":\nContents of (");
 	add_cache_print(segname);
 	add_cache_print(",");
@@ -52,13 +81,13 @@ void						print_value(uint64_t const addr, size_t len,
 	add_cache_print("\t");
 }
 
-void						print_line(uint64_t length, void const *ptr)
+void						print_line(uint64_t length, void const *ptr, t_otool *otool)
 {
 	unsigned char			c;
 	unsigned int			i;
 	char					mem[3];
 
-	if (length <= 0 || ptr == NULL)
+	if (length <= 0 || ptr == NULL || otool == NULL)
 		return ;
 	i = 0;
 	while (i < NB_EACH_LINE && i < length)
@@ -68,7 +97,8 @@ void						print_line(uint64_t length, void const *ptr)
 		ft_utoa_base_tab(c, 16, mem, 2);
 		place_value(mem, 2);
 		add_cache_print(mem);
-		add_cache_print(" ");
+		if (otool->cpu_type != CPU_TYPE_POWERPC || (i % 4) == 0)
+			add_cache_print(" ");
 	}
 	add_cache_print("\n");
 }

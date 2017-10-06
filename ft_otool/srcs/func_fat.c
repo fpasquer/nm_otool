@@ -6,13 +6,11 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 11:50:46 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/05 17:01:50 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/06 10:43:50 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_otool.h"
-
-#define B_TO_L(m, v) ((v) ? b_to_l_endian(v) : v)
 
 static void					*func_fat2(t_otool *otool, char const *name,
 	void const *ptr)
@@ -35,6 +33,7 @@ static void					*func_fat2(t_otool *otool, char const *name,
 	i = 0;
 	while (i++ < end)
 	{
+		otool->cpu_type = B_TO_L(otool->cigam, arch->cputype);
 		if ((void*)(ptr + B_TO_L(otool->cigam, arch->offset)) < otool->end)
 			exe_otool(otool, name, ptr + (B_TO_L(otool->cigam, arch->offset)));
 		arch = (void*)arch + sizeof(*arch);
@@ -60,6 +59,7 @@ void						*func_fat(t_otool *otool, char const *name,
 		return ((void*)put_error_file("Over the end aghsjasdasdsad hsak "));
 	otool->cigam = (head->magic == FAT_CIGAM) ? true : false;
 	end = otool->cigam ? b_to_l_endian(head->nfat_arch) : head->nfat_arch;
+	otool->fat = true;
 	i = 0;
 	while (i++ < end)
 	{
@@ -69,5 +69,6 @@ void						*func_fat(t_otool *otool, char const *name,
 						arch->offset))));
 				arch = (void*)arch + sizeof(*arch);
 	}
+	otool->not_foond = true;
 	return (func_fat2(otool, name, ptr));
 }
