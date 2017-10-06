@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/25 10:18:11 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/06 10:52:04 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/06 12:00:39 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,13 @@ void						print_header(char const *name, char const *segname,
 		return ;
 	add_cache_print(name);
 	i = 0;
-	while (g_cpu_str[i].key != 0)
-		if (g_cpu_str[i++].key == otool->cpu_type)
-		{
-			add_cache_print(g_cpu_str[i - 1].str);
-			break ;
-		}
+	if (otool->end_seg > 1)
+		while (g_cpu_str[i].key != 0)
+			if (g_cpu_str[i++].key == otool->cpu_type)
+			{
+				add_cache_print(g_cpu_str[i - 1].str);
+				break ;
+			}
 	add_cache_print(":\nContents of (");
 	add_cache_print(segname);
 	add_cache_print(",");
@@ -81,7 +82,8 @@ void						print_value(uint64_t const addr, size_t len,
 	add_cache_print("\t");
 }
 
-void						print_line(uint64_t length, void const *ptr, t_otool *otool)
+void						print_line(uint64_t length, void const *ptr,
+		t_otool *otool)
 {
 	unsigned char			c;
 	unsigned int			i;

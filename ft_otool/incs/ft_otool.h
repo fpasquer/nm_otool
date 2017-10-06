@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_otool.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fpasquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/07/26 15:00:37 by fpasquer         ###   ########.fr       */
+/*   Created: 2017/10/06 12:23:18 by fpasquer          #+#    #+#             */
+/*   Updated: 2017/10/06 12:28:39 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 #  define CPU_SUB_TYPE CPU_SUBTYPE_X86_64_ALL
 # endif
 
-#define B_TO_L(m, v) ((m) ? b_to_l_endian(v) : v)
+# define B_TO_L(m, v) ((m) ? b_to_l_endian(v) : v)
 
 typedef struct				s_cpu_type_str
 {
@@ -63,6 +63,7 @@ typedef struct				s_otool
 	bool					fat;
 	bool					not_foond;
 	uint32_t				cpu_type;
+	uint32_t				end_seg;
 	struct stat				stat;
 }							t_otool;
 
