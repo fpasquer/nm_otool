@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 12:41:54 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/04 10:12:57 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/07 10:49:14 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@ static t_symbol				*save_output_64(t_nm **nm, struct symtab_command
 	char					*str_table;
 
 	T;
-	if (nm == NULL || *nm == NULL || sym == NULL)
+	if (nm == NULL || *nm == NULL || sym == NULL || (i = 0) != 0)
 		ERROR_EXIT("Invalid arguments 2", __FILE__, NULL, NULL);
 	if ((ret = (t_symbol *)ft_memalloc(sizeof(*ret) * sym->nsyms)) == NULL)
 		return (NULL);
-	i = 0;
 	if ((void*)(tab = (void*)ptr + sym->symoff) + sizeof(*tab) * sym->nsyms
 			> (void*)(*nm)->end)
 		ERROR_EXIT("PTR OVERFLOW 3", __FILE__, NULL, NULL);
@@ -32,7 +31,8 @@ static t_symbol				*save_output_64(t_nm **nm, struct symtab_command
 	(*nm)->nb_symbol = sym->nsyms;
 	while (i++ < sym->nsyms)
 	{
-		if ((void*)str_table + tab[i - 1].n_un.n_strx > (void*)(*nm)->end)
+		if (str_table > (*nm)->end || (void*)str_table + tab[i - 1].n_un.n_strx
+				> (void*)(*nm)->end)
 			ERROR_EXIT("PTR OVERFLOW 3", __FILE__, NULL, NULL);
 		ret[i - 1].value = tab[i - 1].n_value;
 		ret[i - 1].type = tab[i - 1].n_type;

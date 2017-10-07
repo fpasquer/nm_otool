@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/05 13:08:31 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/07 10:05:57 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ typedef struct				s_func_nm
 t_func_nm					g_func[NB_FUNC];
 
 t_nm						*init_flags(char const **argv);
-bool						loop_nm(t_nm *nm, char const *path_name);
+int							loop_nm(t_nm *nm, char const *path_name);
 void						del_nm(void *nb);
 void						print_nm(t_nm *nm);
 t_symbol					*exe_nm(t_nm **nm, char const *name_bin, void *ptr);

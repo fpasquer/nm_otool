@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:05:56 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/04 14:37:55 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/07 10:42:17 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 int							main(int argc, char **argv)
 {
-	bool					found;
+	int						found;
 	int						i;
 	int						j;
 	t_nm					*nm;
 
 	if (!(nm = init_flags((const char **)argv)) || init_cache_print(1) == false)
 		ERROR_INT("nm == NULL", __FILE__, NULL, NULL);
+	found = false;
 	if (argc <= 1)
 		loop_nm(nm, "a.out");
 	else if ((i = 0) == 0)
 	{
-		found = false;
-		while (++i < argc && (j = 0) == 0)
+		while (++i < argc && (j = 0) == 0 && found == false)
 		{
 			while (ft_isspace(argv[i][j]))
 				j++;
@@ -36,6 +36,7 @@ int							main(int argc, char **argv)
 		if (found == false)
 			loop_nm(nm, "a.out");
 	}
-	del_nm(&nm);
-	return (EXIT_SUCCESS);
+	if (found != -1)
+		del_nm(&nm);
+	return (found == -1 ? EXIT_FAILURE : EXIT_SUCCESS);
 }

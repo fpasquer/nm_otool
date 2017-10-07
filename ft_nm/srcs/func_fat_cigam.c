@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 17:49:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/05 14:08:27 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/07 10:42:46 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,31 @@ uint32_t					b_to_l(uint32_t num)
 			((num << 24) & 0xff000000));
 }
 
-static void					cpu_and_cpusub_type_true(t_nm **nm,
+static int					cpu_and_cpusub_type_true(t_nm **nm,
 		char const *name_bin, uint32_t offset_arch, void *ptr)
 {
 	t_symbol				*symbol;
 
+	if (ptr == NULL || name_bin == NULL || nm == NULL || *nm == NULL)
+		return (-1);
+	if (ptr + offset_arch > (void*)(*nm)->end)
+		return (-1);
 	if ((symbol = exe_nm(nm, name_bin, ptr + offset_arch)) != NULL)
+	{
 		gestion_symbols(nm, &symbol, name_bin, ptr + offset_arch);
+		return (true);
+	}
+	return (-1);
 }
 
 static int					loop_fat(t_nm **nm, const uint32_t end, void *ptr,
-		char const *name_bin)
+		char const *name)
 {
+	int						ret;
 	uint32_t				i;
 	struct fat_arch			*arch;
 
-	if (nm == NULL || *nm == NULL || ptr == NULL || name_bin == NULL)
+	if (nm == NULL || *nm == NULL || ptr == NULL || name == NULL)
 		ERROR_INT("NM = NULL 2", __FILE__, NULL, NULL);
 	i = 0;
 	if ((void*)(arch = (void*)ptr + sizeof(struct fat_header*)) >
@@ -68,9 +77,9 @@ static int					loop_fat(t_nm **nm, const uint32_t end, void *ptr,
 		if ((b_to_l(arch->cputype) == CPU_TYPE &&
 				b_to_l(arch->cpusubtype & CPU_SUBTYPE_MASK) == CPU_SUB_TYPE))
 		{
-			cpu_and_cpusub_type_true(nm, name_bin, b_to_l(arch->offset), ptr);
+			ret = cpu_and_cpusub_type_true(nm, name, b_to_l(arch->offset), ptr);
 			reset_struct_nm(nm, ptr + b_to_l(arch->offset));
-			return (true);
+			return (ret);
 		}
 		if ((void*)(arch = (void*)arch + sizeof(*arch)) > (void*)(*nm)->end)
 			ERROR_INT("Ptr arch over the end 2", __FILE__, del_nm, nm);
@@ -78,19 +87,21 @@ static int					loop_fat(t_nm **nm, const uint32_t end, void *ptr,
 	return (false);
 }
 
-static void					loop_fat2(t_nm **nm, const uint32_t end, void *ptr,
+static int					loop_fat2(t_nm **nm, const uint32_t end, void *ptr,
 	char const *name_bin)
 {
+	int						ret;
 	int						j;
 	uint32_t				i;
 	struct fat_arch			*arch;
 
 	if (nm == NULL || *nm == NULL || ptr == NULL || name_bin == NULL)
-		ERROR_VOID("NM = NULL 2", __FILE__, NULL, NULL);
+		ERROR_INT("NM = NULL 2", __FILE__, NULL, NULL);
 	i = 0;
+	ret = true;
 	if ((void*)(arch = ptr + sizeof(struct fat_header*)) > (void*)(*nm)->end)
-		ERROR_VOID("Ptr arch over the end", __FILE__, del_nm, nm);
-	while (i++ < end && (j = 0) == 0)
+		ERROR_INT("Ptr arch over the end", __FILE__, del_nm, nm);
+	while (i++ < end && (j = 0) == 0 && ret == true)
 	{
 		if (end > 1)
 			add_cache_print("\n");
@@ -100,16 +111,19 @@ static void					loop_fat2(t_nm **nm, const uint32_t end, void *ptr,
 		while (end > 1 && g_cpu_str[j].key != 0)
 			if (g_cpu_str[j++].key == b_to_l(arch->cputype))
 				NAME;
-		cpu_and_cpusub_type_true(nm, name_bin, b_to_l(arch->offset), ptr);
+		ret = cpu_and_cpusub_type_true(nm, name_bin, b_to_l(arch->offset), ptr);
 		if ((void*)(arch = (void*)arch + sizeof(*arch)) > (void*)(*nm)->end)
-			ERROR_VOID("Ptr arch over the end 2", __FILE__, del_nm, nm);
+			ERROR_INT("Ptr arch over the end 2", __FILE__, del_nm, nm);
 	}
 	reset_struct_nm(nm, ptr + b_to_l(arch->offset));
+	(*nm)->fat = true;
+	return (ret);
 }
 
 t_symbol					*func_fat_cigam(t_nm **nm, void *ptr,
 		char const *name_bin)
 {
+	int						ret;
 	struct fat_header		*header;
 
 	if (nm == NULL || *nm == NULL || ptr == NULL || name_bin == NULL)
@@ -118,10 +132,10 @@ t_symbol					*func_fat_cigam(t_nm **nm, void *ptr,
 		return (NULL);
 	(*nm)->fat = true;
 	header = (struct fat_header*)ptr;
-	if (loop_fat(nm, b_to_l(header->nfat_arch), ptr, name_bin) == false)
+	if ((ret = loop_fat(nm, b_to_l(header->nfat_arch), ptr, name_bin)) == false)
 	{
 		(*nm)->fat = false;
-		loop_fat2(nm, b_to_l(header->nfat_arch), ptr, name_bin);
+		ret = loop_fat2(nm, b_to_l(header->nfat_arch), ptr, name_bin);
 	}
-	return (NULL);
+	return (ret == true ? ptr : NULL);
 }
