@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 17:49:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/09 07:26:41 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/09 09:51:56 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,6 @@ t_cpu_type_str				g_cpu_str[] =
 	{CPU_TYPE_POWERPC64, " (for architecture pp64) :\n"},
 	{0, ""}
 };
-
-uint32_t					b_to_l(uint32_t num)
-{
-	return (((num >> 24) & 0xff) |
-			((num << 8) & 0xff0000) |
-			((num >> 8) & 0xff00) |
-			((num << 24) & 0xff000000));
-}
 
 static int					cpu_and_cpusub_type_true(t_nm **nm,
 		char const *name_bin, uint32_t offset_arch, void *ptr)

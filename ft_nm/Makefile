@@ -6,7 +6,7 @@
 #    By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/05/17 16:07:18 by fpasquer          #+#    #+#              #
-#    Updated: 2017/10/04 08:46:08 by fpasquer         ###   ########.fr        #
+#    Updated: 2017/10/09 09:52:19 by fpasquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME			= ft_nm
 SRC_NAME		= main.c init_flags.c del_nm.c loop_nm.c exe_nm.c func_32.c		\
 				  func_32_cigam.c func_64.c func_64_cigam.c func_fat_cigam.c	\
 				  func_fat_magic.c symbols.c sorts.c print_symbols.c get_desc.c	\
-				  func_armag_magic.c
+				  func_armag_magic.c swap_cigam.c swap_cigam2.c
 
 INCLUDES		= ft_nm.h
 

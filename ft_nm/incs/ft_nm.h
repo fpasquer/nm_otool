@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/07 10:05:57 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/09 09:56:35 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,5 +161,17 @@ char						*get_desc(t_symbol const symbol);
 bool						put_error_binaries(char const *path_name);
 bool						reset_struct_nm(t_nm **nm, void *ptr);
 uint32_t					b_to_l(uint32_t num);
+void						ft_swap_symtab_command(struct symtab_command *cmd,
+		enum NXByteOrder target_byte_order);
+void						ft_swap_nlist(struct nlist *lst,
+		uint32_t const nsyms, enum NXByteOrder target_byte_order);
+void						ft_swap_section(struct section *sec,
+		uint32_t const nsects, enum NXByteOrder target_byte_order);
+void						ft_swap_segment_command(struct segment_command *seg,
+		enum NXByteOrder target_byte_order);
+void						ft_swap_load_command(struct load_command *lc,
+		enum NXByteOrder target_byte_order);
+void						ft_swap_mach_header(struct mach_header *header,
+		enum NXByteOrder target_byte_order);
 
 #endif
