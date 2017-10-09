@@ -6,11 +6,14 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 21:00:53 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/08 20:27:48 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/09 07:30:51 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_nm.h"
+
+#define E ft_memdel((void**)&symbol); print_cache();
+#define P add_cache_print("\n"); add_cache_print(name); add_cache_print(":\n");
 
 static bool					get_length_arch(char const *ar_name,
 		size_t *v)
@@ -50,29 +53,29 @@ static int					print_arch_symbol(t_nm **nm, char const *name_lib,
 		char const *name_obj, void *ptr)
 {
 	int						ret;
-	char					*name_cpy;
+	char					*name;
 	t_symbol				*sym;
 
 	if (nm == NULL || name_lib == NULL || ptr == NULL || (ret = -1) != -1)
 		ERROR_INT("NM = NULL", __FILE__, NULL, NULL);
 	if (((*nm)->flags & F_A_MAJ) == 0 && ((*nm)->flags & F_O_MIN) == 0)
 	{
-		if ((name_cpy = ft_multijoin(4, name_lib, "(", name_obj, ")")) == NULL)
+		if ((name = ft_multijoin(4, name_lib, "(", name_obj, ")")) == NULL)
 			ERROR_INT("NAME_CPY failled", __FILE__, del_nm, nm);
-		add_cache_print("\n");
-		add_cache_print(name_cpy);
-		add_cache_print(":\n");
+		P;
 	}
 	else
-		if ((name_cpy = ft_multijoin(3, name_lib, ":", name_obj)) == NULL)
-			ERROR_INT("NAME_CPY failled 2", __FILE__, del_nm, nm);
-	if ((sym = exe_nm(nm, name_cpy, ptr)) != NULL)
 	{
-		gestion_symbols(nm, &sym, name_cpy, ptr);
+		if ((name = ft_multijoin(3, name_lib, ":", name_obj)) == NULL)
+			ERROR_INT("NAME_CPY failled 2", __FILE__, del_nm, nm);
+	}
+	if ((sym = exe_nm(nm, name, ptr)) != NULL)
+	{
+		gestion_symbols(nm, &sym, name, ptr);
 		reset_struct_nm(nm, ptr);
 		ret = true;
 	}
-	ft_memdel((void**)&name_cpy);
+	ft_memdel((void**)&name);
 	return (ret);
 }
 
@@ -102,8 +105,7 @@ static t_symbol				*save_sort_prit_symbol(t_nm **nm, void *ptr,
 			ret = print_arch_symbol(nm, name_lib, get_name_symbol(ptr +
 					symbol[i - 1].ran_off - SARMAG, &l), ptr +
 					symbol[i - 1].ran_off - SARMAG + l + sizeof(struct ar_hdr));
-	ft_memdel((void**)&symbol);
-	print_cache();
+	E;
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 13:23:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/07 10:57:51 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/09 07:31:31 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ bool						reset_struct_nm(t_nm **nm, void *ptr)
 		close((*nm)->fd);
 		(*nm)->fd = 0;
 	}
-	/*(*nm)->fat = false;*/
 	if ((*nm)->p_name_cpy != NULL)
 		ft_memdel((void**)&(*nm)->p_name_cpy);
 	if (ptr != NULL && ptr != MAP_FAILED &&
@@ -48,7 +47,7 @@ bool						reset_struct_nm(t_nm **nm, void *ptr)
 }
 
 static int					loop_nm_next(t_nm *nm, char const *path_name,
-		void* ptr)
+		void *ptr)
 {
 	int						ret;
 	t_symbol				*symbol;

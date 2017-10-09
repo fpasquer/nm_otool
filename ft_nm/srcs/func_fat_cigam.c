@@ -6,13 +6,14 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 17:49:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/08 20:22:18 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/09 07:26:41 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_nm.h"
 
 #define NAME {add_cache_print(g_cpu_str[j - 1].str); break ;}
+#define V int ret;int j; uint32_t i;struct fat_arch *arch;
 
 t_cpu_type_str				g_cpu_str[] =
 {
@@ -90,11 +91,7 @@ static int					loop_fat(t_nm **nm, const uint32_t end, void *ptr,
 static int					loop_fat2(t_nm **nm, const uint32_t end, void *ptr,
 	char const *name_bin)
 {
-	int						ret;
-	int						j;
-	uint32_t				i;
-	struct fat_arch			*arch;
-
+	V;
 	if (nm == NULL || *nm == NULL || ptr == NULL || name_bin == NULL)
 		ERROR_INT("NM = NULL 2", __FILE__, NULL, NULL);
 	i = 0;
