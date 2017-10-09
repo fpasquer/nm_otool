@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/23 08:09:38 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/09 09:56:35 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/09 11:50:11 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct				s_desc
 typedef struct				s_nm
 {
 	bool					fat;
+	bool					print;
 	char					*p_name_cpy;
 	char					*end;
 	int						fd;

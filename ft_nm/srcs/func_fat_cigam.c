@@ -6,13 +6,13 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/24 17:49:18 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/09 11:02:10 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/09 11:58:18 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_nm.h"
 
-#define NAME {add_cache_print(g_cpu_str[j - 1].str); break ;}
+#define NAME {add_cache_print(g_cpu_str[j - 1].str); break ; }
 #define V int ret;int j; uint32_t i;struct fat_arch *arch;
 
 t_cpu_type_str				g_cpu_str[] =
@@ -100,6 +100,7 @@ static int					loop_fat2(t_nm **nm, const uint32_t end, void *ptr,
 		while (end > 1 && g_cpu_str[j].key != 0)
 			if (g_cpu_str[j++].key == b_to_l(arch->cputype))
 				NAME;
+		(*nm)->print = 1;
 		ret = cpu_and_cpusub_type_true(nm, name_bin, b_to_l(arch->offset), ptr);
 		if ((void*)(arch = (void*)arch + sizeof(*arch)) > (void*)(*nm)->end)
 			ERROR_INT("Ptr arch over the end 2", __FILE__, del_nm, nm);
