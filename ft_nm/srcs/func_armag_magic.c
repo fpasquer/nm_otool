@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 21:00:53 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/07 10:57:41 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/08 20:27:48 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ static t_symbol				*save_sort_prit_symbol(t_nm **nm, void *ptr,
 					symbol[i - 1].ran_off - SARMAG, &l), ptr +
 					symbol[i - 1].ran_off - SARMAG + l + sizeof(struct ar_hdr));
 	ft_memdel((void**)&symbol);
-	(*nm)->fat = true;
-	return (ret == true ? ptr : NULL);
+	print_cache();
+	return (NULL);
 }
 
 t_symbol					*func_armag_magic(t_nm **nm, void *ptr,
