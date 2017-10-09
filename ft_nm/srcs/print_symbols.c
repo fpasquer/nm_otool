@@ -6,7 +6,7 @@
 /*   By: fpasquer <fpasquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/16 16:07:00 by fpasquer          #+#    #+#             */
-/*   Updated: 2017/10/05 10:29:54 by fpasquer         ###   ########.fr       */
+/*   Updated: 2017/10/09 11:13:39 by fpasquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,7 @@ void						print_symbols(t_nm const **nm,
 	if ((*nm)->nb_file > 1 && ((*nm)->flags & F_A_MAJ) == 0 &&
 			((*nm)->flags & F_O_MIN) == 0 && (*nm)->fat == false)
 	{
-		add_cache_print("\n");
-		add_cache_print(name_file);
-		add_cache_print(":\n");
+;
 	}
 	while (i != end)
 	{
